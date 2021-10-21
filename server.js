@@ -8,8 +8,8 @@ const app = express();
 
 const port = 4000;
 
+app.set("views", process.cwd() + "/src/views");
 app.set("view engine", "pug");
-app.set("views", process.cwd() + "src/views");
 
 app.use(logger("dev"));
 app.use("/", globalRouter);
