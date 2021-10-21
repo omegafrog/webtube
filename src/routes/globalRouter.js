@@ -1,7 +1,7 @@
-import { Express } from "express";
+import express from "express";
 import { loginUser, joinUser } from "../controllers/userController";
 import { recommended, searchVideo } from "../controllers/videoController";
-const globalRouter = Express.Router();
+const globalRouter = express.Router();
 
 globalRouter.get("/", recommended);
 globalRouter.get("/login", loginUser);
