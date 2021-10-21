@@ -1,6 +1,6 @@
-import { express } from "express";
+import { Express } from "express";
 
-const globalRouter = express.Router();
+const globalRouter = Express.Router();
 
 globalRouter.get("/", recommended);
 globalRouter.get("/login", loginUser);
