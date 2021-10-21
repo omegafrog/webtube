@@ -9,6 +9,7 @@
   "devDependencies": {
     "@babel/core": "^7.15.8",
     "@babel/node": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
     "nodemon": "^2.0.14"
   },
   "scripts": {
@@ -23,6 +24,5 @@
   "bugs": {
     "url": "https://github.com/omegafrog/webtube/issues"
   },
-  "homepage": "https://github.com/omegafrog/webtube#readme",
-  "type": "module"
+  "homepage": "https://github.com/omegafrog/webtube#readme"
 }

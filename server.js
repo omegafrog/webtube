@@ -2,9 +2,9 @@ import express from "express";
 import logger from "morgan";
 import globalRouter from "./src/routes/globalRouter";
 import userRouter from "./src/routes/userRouter";
-import videoRouter from "./src/routes/videoRouter.js";
+import videoRouter from "./src/routes/videoRouter";
 
-const app = expess();
+const app = express();
 
 const port = 4000;
 

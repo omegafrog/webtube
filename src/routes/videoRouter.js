@@ -1,11 +1,11 @@
-import { Express } from "express";
+import express from "express";
 import {
   seeVideo,
   editVideo,
   deleteVideo,
   uploadVideo,
 } from "../controllers/videoController";
-const videoRouter = Express.Router();
+const videoRouter = express.Router();
 
 videoRouter.get("/:id", seeVideo);
 videoRouter.get("/:id/edit", editVideo);

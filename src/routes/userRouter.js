@@ -1,11 +1,11 @@
-import { Express } from "express";
+import express from "express";
 import {
   seeUser,
   editUser,
   deleteUser,
   logoutUser,
 } from "../controllers/userController";
-const userRouter = Express.Router;
+const userRouter = express.Router();
 
 userRouter.get("/:id", seeUser);
 userRouter.get("/:id/edit", editUser);
