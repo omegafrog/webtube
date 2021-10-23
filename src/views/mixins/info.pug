@@ -1,0 +1,10 @@
+mixin info(video)
+    ul 
+        li name : #{video.name}
+        li rating : #{video.rating}/5
+        li createdAt : #{video.createdAt}
+        li
+         each comment in video.comments
+            ul
+                li name : #{comment.name}<br> #{comment.comment}
+        
