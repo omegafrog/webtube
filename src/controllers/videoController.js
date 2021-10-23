@@ -1,5 +1,10 @@
+const fakeUser = {
+  name: "faker",
+  loggedIn: true,
+};
+
 export const recommended = (req, res) =>
-  res.render("home", { pageTitle: "Home" });
+  res.render("home", { pageTitle: "Home", fakeUser: fakeUser });
 export const searchVideo = (req, res) => res.send("search video");
 export const seeVideo = (req, res) => res.render("watch");
 export const editVideo = (req, res) => res.send("edit video");
