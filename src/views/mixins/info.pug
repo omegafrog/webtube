@@ -1,0 +1,10 @@
+mixin info(video)
+    div
+        h4
+            a(href="/videos/"+ video.id)=video.name
+        ul 
+            li name : #{video.name}
+            li rating : #{video.rating}/5
+            li createdAt : #{video.createdAt}
+            li comments : #{video.comments}
+            
