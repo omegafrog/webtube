@@ -9,16 +9,19 @@ const videos = [
     rating: 3,
     views: 1,
     createdAt: "2 minutes ago",
-    comments: [
-      {
-        title: "joker",
-        comment: "why so serious",
-      },
-      {
-        title: "faker",
-        comment: "championship winner is me!",
-      },
-    ],
+    comments: {
+      data: [
+        {
+          title: "joker",
+          comment: "why so serious",
+        },
+        {
+          title: "faker",
+          comment: "championship winner is me!",
+        },
+      ],
+      num: 2,
+    },
     id: 0,
   },
   {
@@ -26,16 +29,19 @@ const videos = [
     rating: 5,
     views: 2,
     createdAt: "2.5 minutes ago",
-    comments: [
-      {
-        title: "joker",
-        comment: "why so serious",
-      },
-      {
-        title: "faker",
-        comment: "championship winner is me!",
-      },
-    ],
+    comments: {
+      data: [
+        {
+          title: "joker",
+          comment: "why so serious",
+        },
+        {
+          title: "faker",
+          comment: "championship winner is me!",
+        },
+      ],
+      num: 2,
+    },
     id: 1,
   },
   {
@@ -43,16 +49,19 @@ const videos = [
     rating: 1,
     views: 3,
     createdAt: "3 minutes ago",
-    comments: [
-      {
-        title: "joker",
-        comment: "why so serious",
-      },
-      {
-        title: "faker",
-        comment: "championship winner is me!",
-      },
-    ],
+    comments: {
+      data: [
+        {
+          title: "joker",
+          comment: "why so serious",
+        },
+        {
+          title: "faker",
+          comment: "championship winner is me!",
+        },
+      ],
+      num: 2,
+    },
     id: 2,
   },
 ];
