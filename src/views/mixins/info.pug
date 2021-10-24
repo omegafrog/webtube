@@ -1,9 +1,9 @@
 mixin info(video)
     div
         h4
-            a(href="/videos/"+ video.id)=video.name
+            a(href="/videos/"+ video.id)=video.title
         ul 
-            li name : #{video.name}
+            li title : #{video.title}
             li rating : #{video.rating}/5
             li createdAt : #{video.createdAt}
             li comments : #{video.comments}
