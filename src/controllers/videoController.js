@@ -85,5 +85,14 @@ export const getUploadVideo = (req, res) => {
   return res.render("upload", { pageTitle: "upload Video", fakeUser });
 };
 export const postUploadVideo = (req, res) => {
+  const { id } = req.params;
+  const { title } = req.body;
+  videos.push({
+    title: title,
+    rating: 0,
+    views: 0,
+    createdAt: "30 seconds ago",
+    comments: {},
+  });
   return res.redirect("/");
 };
