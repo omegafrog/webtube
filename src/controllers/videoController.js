@@ -102,6 +102,7 @@ export const postUploadVideo = (req, res) => {
     views: 0,
     createdAt: "30 seconds ago",
     comments: {},
+    id: videos.length,
   });
   return res.redirect("/");
 };
