@@ -26,12 +26,6 @@ export const recommended = async (req, res) => {
     return res.send("error");
   }
 };
-export const searchVideo = (req, res) => res.send("search video");
-export const seeVideo = (req, res) => {
-  const { id } = req.params;
-  const video = videos[id];
-  res.render("watch", { pageTitle: video.title, fakeUser, video });
-};
 export const getEditVideo = (req, res) => {
   const { id } = req.params;
   const video = videos[id];
@@ -47,20 +41,32 @@ export const postEditVideo = (req, res) => {
   videos[id].title = title;
   return res.redirect("/videos/" + req.params.id);
 };
-export const deleteVideo = (req, res) => res.send("delete video");
 export const getUploadVideo = (req, res) => {
   return res.render("upload", { pageTitle: "upload Video", fakeUser });
 };
-export const postUploadVideo = (req, res) => {
+export const postUploadVideo = async (req, res) => {
   const { id } = req.params;
-  const { title } = req.body;
-  videos.push({
-    title: title,
-    rating: 0,
-    views: 0,
-    createdAt: "30 seconds ago",
-    comments: {},
-    id: videos.length,
+  const { title, description, hashtags } = req.body;
+  // await Video.create()
+  const video = new Video({
+    title,
+    description,
+    hashtags: hashtags.split(",").map((word) => `#${word}`),
+    createdAt: Date.now(),
+    meta: {
+      views: 0,
+      rating: 0,
+    },
   });
+
+  await video.save();
   return res.redirect("/");
+};
+export const deleteVideo = (req, res) => res.send("delete video");
+
+export const searchVideo = (req, res) => res.send("search video");
+export const seeVideo = (req, res) => {
+  const { id } = req.params;
+  const video = videos[id];
+  res.render("watch", { pageTitle: video.title, fakeUser, video });
 };

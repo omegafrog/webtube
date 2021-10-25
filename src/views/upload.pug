@@ -2,5 +2,7 @@ extends base.pug
 block content 
     h4 upload new video
     form(method="POST")
-        input(name="title", placeholder="title", value="video title")
-        input(type="submit", value="Save")
+        input(name="title", required,type="text",placeholder="title")
+        input(name="description",required, type="text", placeholder="description")
+        input(name="hashtags",required,type="text", placeholder="hashtags, seperated by comma")
+        input(type="submit", value="Upload")
