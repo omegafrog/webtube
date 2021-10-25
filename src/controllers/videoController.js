@@ -5,12 +5,26 @@ const fakeUser = {
   loggedIn: true,
 };
 
-export const recommended = (req, res) => {
-  // {} --> find all
-  Video.find({}, (err, videos) => {
-    console.log(err, videos);
+// export const recommended = (req, res) => {
+//   // {} --> find all
+//   Video.find({}, (err, videos) => {
+//     console.log(err, videos);
+//     return res.render("home", { pageTitle: "Home", fakeUser, videos });
+//   });
+// };
+
+// pormise
+export const recommended = async (req, res) => {
+  try {
+    console.log("start");
+    const videos = await Video.find({});
+    console.log(videos);
+    console.log("end");
     return res.render("home", { pageTitle: "Home", fakeUser, videos });
-  });
+  } catch {
+    console.log("error");
+    return res.send("error");
+  }
 };
 export const searchVideo = (req, res) => res.send("search video");
 export const seeVideo = (req, res) => {
