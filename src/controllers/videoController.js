@@ -1,73 +1,17 @@
+import Video from "../models/video";
+
 const fakeUser = {
   name: "faker",
   loggedIn: true,
 };
 
-const videos = [
-  {
-    title: "first video",
-    rating: 3,
-    views: 1,
-    createdAt: "2 minutes ago",
-    comments: {
-      data: [
-        {
-          title: "joker",
-          comment: "why so serious",
-        },
-        {
-          title: "faker",
-          comment: "championship winner is me!",
-        },
-      ],
-      num: 2,
-    },
-    id: 0,
-  },
-  {
-    title: "second video",
-    rating: 5,
-    views: 2,
-    createdAt: "2.5 minutes ago",
-    comments: {
-      data: [
-        {
-          title: "joker",
-          comment: "why so serious",
-        },
-        {
-          title: "faker",
-          comment: "championship winner is me!",
-        },
-      ],
-      num: 2,
-    },
-    id: 1,
-  },
-  {
-    title: "third video",
-    rating: 1,
-    views: 3,
-    createdAt: "3 minutes ago",
-    comments: {
-      data: [
-        {
-          title: "joker",
-          comment: "why so serious",
-        },
-        {
-          title: "faker",
-          comment: "championship winner is me!",
-        },
-      ],
-      num: 2,
-    },
-    id: 2,
-  },
-];
-
-export const recommended = (req, res) =>
-  res.render("home", { pageTitle: "Home", fakeUser, videos });
+export const recommended = (req, res) => {
+  // {} --> find all
+  Video.find({}, (err, videos) => {
+    console.log(err, videos);
+    return res.render("home", { pageTitle: "Home", fakeUser, videos });
+  });
+};
 export const searchVideo = (req, res) => res.send("search video");
 export const seeVideo = (req, res) => {
   const { id } = req.params;

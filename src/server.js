@@ -2,9 +2,9 @@ import "./db";
 import Video from "./models/video";
 import express from "express";
 import logger from "morgan";
-import globalRouter from "./src/routes/globalRouter";
-import userRouter from "./src/routes/userRouter";
-import videoRouter from "./src/routes/videoRouter";
+import globalRouter from "./routes/globalRouter";
+import userRouter from "./routes/userRouter";
+import videoRouter from "./routes/videoRouter";
 
 const app = express();
 
