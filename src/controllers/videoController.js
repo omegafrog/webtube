@@ -40,15 +40,20 @@ export const getEditVideo = async (req, res) => {
 export const postEditVideo = async (req, res) => {
   const { id } = req.params;
   const { title, description, hashtags } = req.body;
-  const video = await Video.findById(id);
-  video.title = title;
-  video.description = description;
-  video.hashtags = hashtags
-    .split(",")
-    .map((word) => (word.startsWith("#") ? word : `#${word.trim()}`));
-  console.log(video.hashtags);
-  await video.save();
-  return res.redirect("/videos/" + req.params.id);
+  const video = await Video.exist({ _id: id });
+  if (video) {
+    await Video.findByIdAndUpdate(id, {
+      title,
+      description,
+      hashtags: hashtags
+        .split(",")
+        .map((word) => (word.startsWith("#") ? word : `#${word.trim()}`)),
+    });
+    await video.save();
+    return res.redirect("/videos/" + req.params.id);
+  } else {
+    return res.send("404", { pageTitle: "video not found" });
+  }
 };
 export const getUploadVideo = (req, res) => {
   return res.render("upload", { pageTitle: "upload Video", fakeUser });
