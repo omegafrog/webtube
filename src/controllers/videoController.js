@@ -24,19 +24,30 @@ export const recommended = async (req, res) => {
     return res.send("error");
   }
 };
-export const getEditVideo = (req, res) => {
+export const getEditVideo = async (req, res) => {
   const { id } = req.params;
-  const video = videos[id];
-  return res.render("edit", {
-    pageTitle: video.title + " | edit",
-    fakeUser,
-    video,
-  });
+  const video = await Video.findById(id);
+  if (video) {
+    return res.render("edit", {
+      pageTitle: video.title + " | edit",
+      fakeUser,
+      video,
+    });
+  } else {
+    return res.render("404", { pageTitle: "video not found" });
+  }
 };
-export const postEditVideo = (req, res) => {
+export const postEditVideo = async (req, res) => {
   const { id } = req.params;
-  const { title } = req.body;
-  videos[id].title = title;
+  const { title, description, hashtags } = req.body;
+  const video = await Video.findById(id);
+  video.title = title;
+  video.description = description;
+  video.hashtags = hashtags
+    .split(",")
+    .map((word) => (word.startsWith("#") ? word : `#${word.trim()}`));
+  console.log(video.hashtags);
+  await video.save();
   return res.redirect("/videos/" + req.params.id);
 };
 export const getUploadVideo = (req, res) => {
@@ -50,7 +61,7 @@ export const postUploadVideo = async (req, res) => {
     const video = new Video({
       title,
       description,
-      hashtags: hashtags.split(",").map((word) => `#${word}`),
+      hashtags: hashtags.split(",").map((word) => `#${word.trim()}`),
     });
     await video.save();
 
