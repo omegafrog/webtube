@@ -16,10 +16,8 @@ const fakeUser = {
 // pormise
 export const recommended = async (req, res) => {
   try {
-    console.log("start");
     const videos = await Video.find({});
     console.log(videos);
-    console.log("end");
     return res.render("home", { pageTitle: "Home", fakeUser, videos });
   } catch {
     console.log("error");
@@ -69,8 +67,8 @@ export const postUploadVideo = async (req, res) => {
 export const deleteVideo = (req, res) => res.send("delete video");
 
 export const searchVideo = (req, res) => res.send("search video");
-export const seeVideo = (req, res) => {
+export const seeVideo = async (req, res) => {
   const { id } = req.params;
-  const video = videos[id];
+  const video = await Video.findById(id);
   res.render("watch", { pageTitle: video.title, fakeUser, video });
 };
