@@ -20,7 +20,9 @@ videoSchema.pre("save", async function () {
 //     .map((word) => (word.startsWith("#") ? word : `#${word.trim()}`));
 
 videoSchema.static("formatHashtags", function (hashtags) {
-  this.hashtags = this.hashtags[0].split(",").map((word) => `#${word.trim()}`);
+  return hashtags
+    .split(",")
+    .map((word) => (word.startsWith("#") ? word : `#${word.trim()}`));
 });
 const Video = new mongoose.model("Video", videoSchema);
 export default Video;
