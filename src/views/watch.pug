@@ -4,4 +4,8 @@ block content
     small=video.createdAt
     hr
     h3 #{video.meta.views} #{video.meta.views === 1?"view":"views"}
+    ul 
+        each hashtag in video.hashtags
+            li 
+                a(href="") #{hashtag}
     a(href= video.id +"/edit") Edit video &rarr;

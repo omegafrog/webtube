@@ -24,20 +24,34 @@ export const recommended = async (req, res) => {
     return res.send("error");
   }
 };
-export const getEditVideo = (req, res) => {
+export const getEditVideo = async (req, res) => {
   const { id } = req.params;
-  const video = videos[id];
-  return res.render("edit", {
-    pageTitle: video.title + " | edit",
-    fakeUser,
-    video,
-  });
+  const video = await Video.findById(id);
+  if (video) {
+    return res.render("edit", {
+      pageTitle: video.title + " | edit",
+      fakeUser,
+      video,
+    });
+  } else {
+    return res.render("404", { pageTitle: "video not found" });
+  }
 };
-export const postEditVideo = (req, res) => {
+export const postEditVideo = async (req, res) => {
   const { id } = req.params;
-  const { title } = req.body;
-  videos[id].title = title;
-  return res.redirect("/videos/" + req.params.id);
+  const { title, description, hashtags } = req.body;
+  const video = await Video.exist({ _id: id });
+  if (video) {
+    await Video.findByIdAndUpdate(id, {
+      title,
+      description,
+      hashtags: Video.formatHashtags(hashtags),
+    });
+    await video.save();
+    return res.redirect("/videos/" + req.params.id);
+  } else {
+    return res.send("404", { pageTitle: "video not found" });
+  }
 };
 export const getUploadVideo = (req, res) => {
   return res.render("upload", { pageTitle: "upload Video", fakeUser });
@@ -47,10 +61,10 @@ export const postUploadVideo = async (req, res) => {
     const { id } = req.params;
     const { title, description, hashtags } = req.body;
     // await Video.create()
-    const video = new Video({
+    const video = Video.create({
       title,
       description,
-      hashtags: hashtags.split(",").map((word) => `#${word}`),
+      hashtags: hashtags.formatHashtags(hashtags),
     });
     await video.save();
 
@@ -70,5 +84,9 @@ export const searchVideo = (req, res) => res.send("search video");
 export const seeVideo = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id);
-  res.render("watch", { pageTitle: video.title, fakeUser, video });
+  if (video) {
+    res.render("watch", { pageTitle: video.title, fakeUser, video });
+  } else {
+    res.render("404", { pageTitle: "video not found", fakeUser });
+  }
 };
