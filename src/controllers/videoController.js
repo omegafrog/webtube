@@ -17,10 +17,9 @@ const fakeUser = {
 export const recommended = async (req, res) => {
   try {
     const videos = await Video.find({});
-    console.log(videos);
+
     return res.render("home", { pageTitle: "Home", fakeUser, videos });
   } catch {
-    console.log("error");
     return res.send("error");
   }
 };
@@ -40,7 +39,7 @@ export const getEditVideo = async (req, res) => {
 export const postEditVideo = async (req, res) => {
   const { id } = req.params;
   const { title, description, hashtags } = req.body;
-  const video = await Video.exist({ _id: id });
+  const video = await Video.exists({ _id: id });
   if (video) {
     await Video.findByIdAndUpdate(id, {
       title,
@@ -70,7 +69,6 @@ export const postUploadVideo = async (req, res) => {
 
     return res.redirect("/");
   } catch (error) {
-    console.log(error);
     return res.render("upload", {
       pageTitle: "Upload Video",
       errorMsg: error._message,
@@ -78,8 +76,15 @@ export const postUploadVideo = async (req, res) => {
     });
   }
 };
-export const deleteVideo = (req, res) => res.send("delete video");
-
+export const deleteVideo = async (req, res) => {
+  const { id } = req.params;
+  const video = await Video.exists({ _id: id });
+  if (video === null) {
+    return res.render("404", { pageTitle: "video not found" });
+  }
+  await Video.findByIdAndDelete(id);
+  return res.redirect("/");
+};
 export const searchVideo = (req, res) => res.send("search video");
 export const seeVideo = async (req, res) => {
   const { id } = req.params;
