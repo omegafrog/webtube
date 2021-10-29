@@ -5,7 +5,19 @@ const fakeUser = {
   loggedIn: true,
 };
 
-export const loginUser = (req, res) => res.send("login");
+export const getLogin = (req, res) =>
+  res.render("login", { pageTitle: "login", fakeUser });
+export const postLogin = async (req, res) => {
+  const { username, password } = req.body;
+  const exists = await User.exists({ username });
+  if (!exists) {
+    return res.render("login", {
+      pageTitle: "login",
+      fakeUser,
+      errorMessage: "An account with this username does not exist",
+    });
+  }
+};
 export const getJoin = (req, res) => {
   res.render("join", { pageTitle: "Join", fakeUser });
 };
