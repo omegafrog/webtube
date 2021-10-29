@@ -1,7 +1,7 @@
 doctype html 
 html(lang="ko")
     head
-        title #{pageTitle} | webtube
+        title #{pageTitle} | #{siteName}
         link(rel="stylesheet" href="https://unpkg.com/mvp.css")
     body
         header
@@ -9,21 +9,21 @@ html(lang="ko")
                 a(href="/") Webtube
             h2 #{pageTitle}
             nav 
-                if fakeUser.loggedIn 
-                    small hello #{fakeUser.name}
+                if loggedIn 
+                    small hello #{user.username}
                 ul 
-                    if fakeUser.loggedIn
+                    if loggedIn
                         li
                             a(href="/logout") Logout
-                    else 
+                    else
                         li 
                             a(href="/login") Login
+                        li 
+                            a(href="/join") Create User
                     li
                         a(href="/videos/upload") Upload Video
                     li
                         a(href="/search") Search Video
-                    li 
-                        a(href="/join") Create User
         main
             block content
     include partials/footer
