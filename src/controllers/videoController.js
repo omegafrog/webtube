@@ -1,10 +1,9 @@
-import Video from "../models/video";
+import Video, { formatHashtags } from "../models/video";
 
 const fakeUser = {
   name: "faker",
   loggedIn: true,
 };
-
 // export const recommended = (req, res) => {
 //   // {} --> find all
 //   Video.find({}, (err, videos) => {
@@ -17,7 +16,7 @@ const fakeUser = {
 export const recommended = async (req, res) => {
   try {
     const videos = await Video.find({});
-
+    console.log(videos);
     return res.render("home", { pageTitle: "Home", fakeUser, videos });
   } catch {
     return res.send("error");
@@ -57,16 +56,12 @@ export const getUploadVideo = (req, res) => {
 };
 export const postUploadVideo = async (req, res) => {
   try {
-    const { id } = req.params;
     const { title, description, hashtags } = req.body;
-    // await Video.create()
-    const video = Video.create({
+    const newUser = await Video.create({
       title,
       description,
-      hashtags: hashtags.formatHashtags(hashtags),
+      hashtags: Video.formatHashtags(hashtags),
     });
-    await video.save();
-
     return res.redirect("/");
   } catch (error) {
     return res.render("upload", {
@@ -85,15 +80,16 @@ export const deleteVideo = async (req, res) => {
   await Video.findByIdAndDelete(id);
   return res.redirect("/");
 };
+
 export const searchVideo = async (req, res) => {
   const { keyword } = req.query;
   if (keyword) {
     const videos = await Video.find({
       title: keyword,
     });
-    res.render("search", { pageTitle: "Search", videos });
+    res.render("search", { pageTitle: "Search", videos, fakeUser });
   } else {
-    res.render("search", { pageTitle: "Search", videos: [] });
+    res.render("search", { pageTitle: "Search", videos: [], fakeUser });
   }
 };
 export const seeVideo = async (req, res) => {
