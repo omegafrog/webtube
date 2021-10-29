@@ -11,6 +11,7 @@ export const getJoin = (req, res) => {
 };
 export const postJoin = async (req, res) => {
   const { name, email, username, password, password2, location } = req.body;
+
   const usernameExist = await User.exists({ username });
   const emailExist = await User.exists({ email });
   const passwordmatched = password !== password2;
@@ -35,14 +36,22 @@ export const postJoin = async (req, res) => {
       fakeUser,
     });
   }
-  const newUser = await User.create({
-    name,
-    email,
-    username,
-    password,
-    location,
-  });
-  return res.redirect("/login");
+  try {
+    const newUser = await User.create({
+      name,
+      email,
+      username,
+      password,
+      location,
+    });
+    return res.redirect("/login");
+  } catch (error) {
+    return res.render("join", {
+      pageTitle: "Create User",
+      errorMsg: error._message,
+      fakeUser,
+    });
+  }
 };
 
 export const seeUser = (req, res) => res.send("seeUser");
