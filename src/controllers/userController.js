@@ -26,6 +26,17 @@ export const postLogin = async (req, res) => {
       errorMessage: "Wrong password",
     });
   }
+  // request에 sid가 있고, 그 sid를 가진 세션을 선택해라
+  // 그래서 req.session인것같다. res.session도아니고
+  req.session.loggedIn = true;
+  req.session.user = user;
+  return res.redirect("/");
+};
+
+export const logout = (req, res) => {
+  if (req.session.loggedIn === true) {
+    req.session.loggedIn = false;
+  }
   return res.redirect("/");
 };
 export const getJoin = (req, res) => {

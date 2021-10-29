@@ -16,7 +16,6 @@ const fakeUser = {
 export const recommended = async (req, res) => {
   try {
     const videos = await Video.find({});
-    console.log(videos);
     return res.render("home", { pageTitle: "Home", fakeUser, videos });
   } catch {
     return res.send("error");
