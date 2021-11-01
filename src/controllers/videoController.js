@@ -1,9 +1,5 @@
-import Video, { formatHashtags } from "../models/video";
+import Video from "../models/video";
 
-const fakeUser = {
-  name: "faker",
-  loggedIn: true,
-};
 // export const recommended = (req, res) => {
 //   // {} --> find all
 //   Video.find({}, (err, videos) => {
@@ -16,7 +12,7 @@ const fakeUser = {
 export const recommended = async (req, res) => {
   try {
     const videos = await Video.find({});
-    return res.render("home", { pageTitle: "Home", fakeUser, videos });
+    return res.render("home", { pageTitle: "Home", videos });
   } catch {
     return res.send("error");
   }
@@ -27,7 +23,6 @@ export const getEditVideo = async (req, res) => {
   if (video) {
     return res.render("edit", {
       pageTitle: video.title + " | edit",
-      fakeUser,
       video,
     });
   } else {
@@ -51,7 +46,7 @@ export const postEditVideo = async (req, res) => {
   }
 };
 export const getUploadVideo = (req, res) => {
-  return res.render("upload", { pageTitle: "upload Video", fakeUser });
+  return res.render("upload", { pageTitle: "upload Video" });
 };
 export const postUploadVideo = async (req, res) => {
   try {
@@ -66,7 +61,6 @@ export const postUploadVideo = async (req, res) => {
     return res.render("upload", {
       pageTitle: "Upload Video",
       errorMsg: error._message,
-      fakeUser,
     });
   }
 };
@@ -86,17 +80,17 @@ export const searchVideo = async (req, res) => {
     const videos = await Video.find({
       title: keyword,
     });
-    res.render("search", { pageTitle: "Search", videos, fakeUser });
+    res.render("search", { pageTitle: "Search", videos });
   } else {
-    res.render("search", { pageTitle: "Search", videos: [], fakeUser });
+    res.render("search", { pageTitle: "Search", videos: [] });
   }
 };
 export const seeVideo = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id);
   if (video) {
-    res.render("watch", { pageTitle: video.title, fakeUser, video });
+    res.render("watch", { pageTitle: video.title, video });
   } else {
-    res.render("404", { pageTitle: "video not found", fakeUser });
+    res.render("404", { pageTitle: "video not found" });
   }
 };
