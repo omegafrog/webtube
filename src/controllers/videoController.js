@@ -56,10 +56,11 @@ export const getUploadVideo = (req, res) => {
 export const postUploadVideo = async (req, res) => {
   try {
     const { title, description, hashtags } = req.body;
+    console.log(hashtags);
     const newUser = await Video.create({
       title,
       description,
-      hashtags: Video.formatHashtags(hashtags),
+      hashtags,
     });
     return res.redirect("/");
   } catch (error) {
