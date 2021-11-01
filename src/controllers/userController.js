@@ -1,20 +1,16 @@
 import User from "../models/user";
 import bcrypt from "bcrypt";
 
-const fakeUser = {
-  name: "faker",
-  loggedIn: true,
+export const getLogin = (req, res) => {
+  res.render("login", { pageTitle: "login" });
 };
-
-export const getLogin = (req, res) =>
-  res.render("login", { pageTitle: "login", fakeUser });
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username });
   if (!user) {
     return res.render("login", {
       pageTitle: "login",
-      fakeUser,
+
       errorMessage: "An account with this username does not exist",
     });
   }
@@ -22,7 +18,7 @@ export const postLogin = async (req, res) => {
   if (!match) {
     return res.render("login", {
       pageTitle: "login",
-      fakeUser,
+
       errorMessage: "Wrong password",
     });
   }
@@ -40,7 +36,7 @@ export const logout = (req, res) => {
   return res.redirect("/");
 };
 export const getJoin = (req, res) => {
-  res.render("join", { pageTitle: "Join", fakeUser });
+  res.render("join", { pageTitle: "Join" });
 };
 export const postJoin = async (req, res) => {
   const { name, email, username, password, password2, location } = req.body;
@@ -52,21 +48,18 @@ export const postJoin = async (req, res) => {
     return res.status(400).render("join", {
       pageTitle: "Join",
       errorMessage: "This username is already taken",
-      fakeUser,
     });
   }
   if (emailExist) {
     return res.status(400).render("join", {
       pageTitle: "Join",
       errorMessage: "This email is already taken",
-      fakeUser,
     });
   }
   if (passwordmatched) {
     return res.status(400).render("join", {
       pageTitle: "Join",
       errorMessage: "Password confirmation is not match",
-      fakeUser,
     });
   }
   try {
@@ -82,7 +75,6 @@ export const postJoin = async (req, res) => {
     return res.render("join", {
       pageTitle: "Create User",
       errorMsg: error._message,
-      fakeUser,
     });
   }
 };

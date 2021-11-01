@@ -1,5 +1,4 @@
 import "./db";
-import Video from "./models/video";
 import express from "express";
 import logger from "morgan";
 import globalRouter from "./routes/globalRouter";
@@ -25,11 +24,6 @@ app.use(
   })
 );
 
-app.use((req, res, next) => {
-  req.sessionStore.all((error, sessions) => {
-    next();
-  });
-});
 app.use(localsMiddleware);
 app.use("/", globalRouter);
 app.use("/users", userRouter);
