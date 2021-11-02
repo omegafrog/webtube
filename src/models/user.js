@@ -11,6 +11,9 @@ const userSchema = new mongoose.Schema({
   location: { type: String },
 });
 
+userSchema.static("hashPassword", async function (password) {
+  return await bcrypt.hash(password, 5);
+});
 userSchema.pre("save", async function () {
   this.password = await bcrypt.hash(this.password, 5);
 });

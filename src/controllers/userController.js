@@ -205,4 +205,40 @@ export const postEditUser = async (req, res) => {
     });
   }
 };
+export const getChangePassword = (req, res) => {
+  if (req.session.user.githubLoginOnly) {
+    return res.redirect("/users/edit");
+  }
+  return res.render("changePassword", { pageTitle: "Change Password" });
+};
+
+export const postChangePassword = async (req, res) => {
+  const {
+    session: {
+      user: { _id, password },
+    },
+    body: { old_password, new_password, new_password_confirmation },
+  } = req;
+  const isOldPasswordCorrect = await bcrypt.compare(old_password, password);
+  console.log(isOldPasswordCorrect);
+  if (!isOldPasswordCorrect) {
+    return res.render("changePassword", {
+      pageTitle: "Change Password",
+      errorMessage: "Current password is not correct.",
+    });
+  } else if (new_password !== new_password_confirmation) {
+    return res.render("changePassword", {
+      pageTitle: "Change Password",
+      errorMessage: "Password confirmation is not correct.",
+    });
+  }
+  const changedUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      password: await User.hashPassword(new_password),
+    },
+    { new: true }
+  );
+  return res.redirect("/users/logout");
+};
 export const deleteUser = (req, res) => res.send("deleteUser");
