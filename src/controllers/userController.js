@@ -33,7 +33,6 @@ export const postLogin = async (req, res) => {
 export const logoutUser = (req, res) => {
   if (req.session.loggedIn === true) {
     req.session.destroy();
-    req.session.loggedIn = false;
   }
   return res.redirect("/");
 };
@@ -89,7 +88,7 @@ export const startGithubLogin = (req, res) => {
     scope: "read:user user:email",
   };
   const params = new URLSearchParams(config).toString();
-  const finalUrl = `${baseUrl}${params}`;
+  const finalUrl = `${baseUrl}?${params}`;
   return res.redirect(finalUrl);
 };
 
