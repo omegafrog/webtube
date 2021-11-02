@@ -8,3 +8,6 @@ block content
         input(name="email", placeholder="New email", value=user.email)
         input(name="username", placeholder="New username", value = user.username)
         input(type="submit", value="edit")
+        if user.githubLoginOnly===false
+            hr
+            a(href="changePassword") Change Password &rarr;
