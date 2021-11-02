@@ -1,12 +1,13 @@
 import User from "../models/user";
 import bcrypt from "bcrypt";
+import fetch from "node-fetch";
 
 export const getLogin = (req, res) => {
   res.render("login", { pageTitle: "login" });
 };
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ username, socialOnly: false });
   if (!user) {
     return res.render("login", {
       pageTitle: "login",
@@ -29,8 +30,9 @@ export const postLogin = async (req, res) => {
   return res.redirect("/");
 };
 
-export const logout = (req, res) => {
+export const logoutUser = (req, res) => {
   if (req.session.loggedIn === true) {
+    req.session.destroy();
     req.session.loggedIn = false;
   }
   return res.redirect("/");
@@ -79,7 +81,83 @@ export const postJoin = async (req, res) => {
   }
 };
 
+export const startGithubLogin = (req, res) => {
+  const baseUrl = "https://github.com/login/oauth/authorize";
+  const config = {
+    client_id: process.env.GITHUB_CLIENT,
+    allow_signup: false,
+    scope: "read:user user:email",
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalUrl = `${baseUrl}${params}`;
+  return res.redirect(finalUrl);
+};
+
+export const finishGithubLogin = async (req, res) => {
+  const baseUrl = "http://github.com/login/oauth/access_token";
+  const config = {
+    client_id: process.env.GITHUB_CLIENT,
+    client_secret: process.env.GITHUB_SECRET,
+    code: req.query.code,
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalUrl = `${baseUrl}?${params}`;
+  const tokenRequest = await (
+    await fetch(finalUrl, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+  ).json();
+  if ("access_token" in tokenRequest) {
+    // access api
+    const { access_token } = tokenRequest;
+    const emailRequest = await (
+      await fetch("https://api.github.com/user/emails", {
+        headers: {
+          Authorization: `token ${access_token}`,
+        },
+      })
+    ).json();
+    const userRequest = await (
+      await fetch("https://api.github.com/user", {
+        headers: {
+          Authorization: `token ${access_token}`,
+        },
+      })
+    ).json();
+    console.log(userRequest);
+    console.log(emailRequest);
+    const emailObj = emailRequest.find(
+      (email) => email.verified === true && email.primary === true
+    );
+    if (!emailObj) {
+      // notification that cannot login this github account.
+      return res.redirect("/login");
+    }
+    let user = await User.findOne({ email: emailObj.email });
+
+    if (!user) {
+      // not exist user with that email on db
+      user = await User.create({
+        name: userRequest.name,
+        avatarURL: userRequest.avatar_url,
+        githubLoginOnly: true,
+        email: emailObj.email,
+        username: userRequest.name,
+        location: userRequest.location,
+        password: "",
+      });
+    }
+    req.session.loggedIn = true;
+    req.session.user = user;
+    return res.redirect("/");
+  } else {
+    return res.redirect("login");
+  }
+};
+
 export const seeUser = (req, res) => res.send("seeUser");
 export const editUser = (req, res) => res.send("editUser");
 export const deleteUser = (req, res) => res.send("deleteUser");
-export const logoutUser = (req, rse) => res.send("logout");
