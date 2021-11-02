@@ -15,13 +15,15 @@ html(lang="ko")
                     if loggedIn
                         li
                             a(href="/users/logout") Logout
+                        li
+                            a(href="/users/edit") Edit #{user.username}'s profile
+                        li
+                            a(href="/videos/upload") Upload Video
                     else
                         li 
                             a(href="/login") Login
                         li 
                             a(href="/join") Create User
-                    li
-                        a(href="/videos/upload") Upload Video
                     li
                         a(href="/search") Search Video
         main
