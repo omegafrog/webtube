@@ -158,6 +158,52 @@ export const finishGithubLogin = async (req, res) => {
   }
 };
 
-export const seeUser = (req, res) => res.send("seeUser");
-export const editUser = (req, res) => res.send("editUser");
+export const seeUser = (req, res) => res.send(JSON.stringify(req.session.user));
+export const getEditUser = (req, res) => {
+  res.render("edit-profile", { pageTitle: "Edit Profile" });
+};
+export const postEditUser = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { name, email, username, location },
+  } = req;
+  try {
+    const usernameOverlapped = await User.exists({ username });
+    const emailOverlapped = await User.exists({ email });
+    console.log(usernameOverlapped, emailOverlapped);
+
+    if (usernameOverlapped && req.session.user.username !== username) {
+      return res.render("edit-profile", {
+        pageTitle: "Edit Users",
+        errorMessage: "Same username exists.",
+      });
+    }
+    if (emailOverlapped && req.session.user.email !== email) {
+      return res.render("edit-profile", {
+        pageTitle: "Edit Users",
+        errorMessage: "Same email exists.",
+      });
+    }
+    const updatedUser = await User.findByIdAndUpdate(
+      _id,
+      {
+        name,
+        email,
+        username,
+        location,
+      },
+      { new: true }
+    );
+    req.session.user = updatedUser;
+    return res.redirect(`/users/${_id}`);
+  } catch (err) {
+    console.log(err);
+    return res.render("edit-profile", {
+      pageTitle: "Edit Users",
+      errorMessage: err._message,
+    });
+  }
+};
 export const deleteUser = (req, res) => res.send("deleteUser");
