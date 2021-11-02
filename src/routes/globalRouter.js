@@ -9,20 +9,16 @@ import {
   logout,
 } from "../controllers/userController";
 import { recommended, searchVideo } from "../controllers/videoController";
-import { protectorMiddleware } from "../middlewares";
+import { protectorMiddleware, publicOnlyMiddleware } from "../middlewares";
 const globalRouter = express.Router();
 
 globalRouter.get("/", recommended);
 globalRouter
   .route("/login")
-  .all(protectorMiddleware)
+  .all(publicOnlyMiddleware)
   .get(getLogin)
   .post(postLogin);
 globalRouter.get("/search", protectorMiddleware, searchVideo);
-globalRouter
-  .route("/join")
-  .all(protectorMiddleware)
-  .get(getJoin)
-  .post(postJoin);
+globalRouter.route("/join").get(getJoin).post(postJoin);
 
 export default globalRouter;
