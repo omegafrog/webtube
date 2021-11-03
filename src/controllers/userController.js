@@ -164,14 +164,14 @@ export const getEditUser = (req, res) => {
 export const postEditUser = async (req, res) => {
   const {
     session: {
-      user: { _id },
+      user: { _id, avatarURL },
     },
     body: { name, email, username, location },
+    file,
   } = req;
   try {
     const usernameOverlapped = await User.exists({ username });
     const emailOverlapped = await User.exists({ email });
-    console.log(usernameOverlapped, emailOverlapped);
 
     if (usernameOverlapped && req.session.user.username !== username) {
       return res.render("edit-profile", {
@@ -191,6 +191,7 @@ export const postEditUser = async (req, res) => {
         name,
         email,
         username,
+        avatarURL: file ? file.path : avatarURL,
         location,
       },
       { new: true }
