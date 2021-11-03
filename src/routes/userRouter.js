@@ -11,7 +11,7 @@ import {
   finishGithubLogin,
 } from "../controllers/userController";
 import {
-  multerMiddleware,
+  uploadAvatar,
   protectorMiddleware,
   publicOnlyMiddleware,
 } from "../middlewares";
@@ -23,7 +23,7 @@ userRouter
   .route("/edit")
   .all(protectorMiddleware)
   .get(getEditUser)
-  .post(multerMiddleware.single("avatar"), postEditUser);
+  .post(uploadAvatar.single("avatar"), postEditUser);
 userRouter.get("/github/start", publicOnlyMiddleware, startGithubLogin);
 userRouter.get("/github/finish", publicOnlyMiddleware, finishGithubLogin);
 userRouter
