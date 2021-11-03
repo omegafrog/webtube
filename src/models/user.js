@@ -16,7 +16,9 @@ userSchema.static("hashPassword", async function (password) {
   return await bcrypt.hash(password, 5);
 });
 userSchema.pre("save", async function () {
+  if (this.isModified()) {
     this.password = await bcrypt.hash(this.password, 5);
+  }
 });
 const User = mongoose.model("User", userSchema);
 
