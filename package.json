@@ -21,7 +21,7 @@
     "nodemon": "^2.0.14"
   },
   "scripts": {
-    "test": "nodemon --delay 500ms --exec babel-node src/init.js"
+    "test": "nodemon --delay 2 --exec babel-node src/init.js"
   },
   "repository": {
     "type": "git",
