@@ -1,0 +1,7 @@
+extends base
+include mixins/info.pug
+block content 
+    h1 #{user.name}
+    each video in user.videos 
+        +info(video)
+    
