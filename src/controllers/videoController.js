@@ -50,13 +50,17 @@ export const getUploadVideo = (req, res) => {
 };
 export const postUploadVideo = async (req, res) => {
   try {
-    const { title, description, hashtags } = req.body;
-    console.log(hashtags);
+    const {
+      body: { title, description, hashtags },
+      file: { path: videoUrl },
+    } = req;
     const newUser = await Video.create({
       title,
+      videoUrl,
       description,
       hashtags,
     });
+    // console.log(newUser);
     return res.redirect("/");
   } catch (error) {
     return res.render("upload", {
