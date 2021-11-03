@@ -17,7 +17,7 @@ import {
 } from "../middlewares";
 const userRouter = express.Router();
 
-userRouter.get("/:id([0-9a-z]{24})", protectorMiddleware, seeUser);
+userRouter.get("/:id([0-9a-z]{24})", seeUser);
 userRouter.get("/logout", protectorMiddleware, logoutUser);
 userRouter
   .route("/edit")

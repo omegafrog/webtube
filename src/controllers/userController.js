@@ -157,7 +157,14 @@ export const finishGithubLogin = async (req, res) => {
   }
 };
 
-export const seeUser = (req, res) => res.send(JSON.stringify(req.session.user));
+export const seeUser = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id).populate("videos");
+  if (!user) {
+    return res.render("404", { pageTitle: "404 page not found." });
+  }
+  return res.render("profile", { pageTitle: user.name, user });
+};
 export const getEditUser = (req, res) => {
   res.render("edit-profile", { pageTitle: "Edit Profile" });
 };
