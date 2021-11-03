@@ -37,6 +37,9 @@ export const postEditVideo = async (req, res) => {
   const { title, description, hashtags } = req.body;
   const video = await Video.exists({ _id: id });
   if (video) {
+    if (String(video.owner._id) !== String(req.session.user._id)) {
+      return res.status(403).redirect("/");
+    }
     await Video.findByIdAndUpdate(id, {
       title,
       description,
@@ -80,8 +83,11 @@ export const postUploadVideo = async (req, res) => {
 export const deleteVideo = async (req, res) => {
   const { id } = req.params;
   const video = await Video.exists({ _id: id });
-  if (video === null) {
+  if (!video) {
     return res.status(404).render("404", { pageTitle: "video not found" });
+  }
+  if (String(video.owner._id) !== String(req.session.user._id)) {
+    return res.status(403).redirect("/");
   }
   await Video.findByIdAndDelete(id);
   return res.redirect("/");
