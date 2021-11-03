@@ -10,7 +10,11 @@ import {
   startGithubLogin,
   finishGithubLogin,
 } from "../controllers/userController";
-import { protectorMiddleware, publicOnlyMiddleware } from "../middlewares";
+import {
+  multerMiddleware,
+  protectorMiddleware,
+  publicOnlyMiddleware,
+} from "../middlewares";
 const userRouter = express.Router();
 
 userRouter.get("/:id([0-9a-z]{24})", protectorMiddleware, seeUser);
@@ -19,7 +23,7 @@ userRouter
   .route("/edit")
   .all(protectorMiddleware)
   .get(getEditUser)
-  .post(postEditUser);
+  .post(multerMiddleware.single("avatar"), postEditUser);
 userRouter.get("/github/start", publicOnlyMiddleware, startGithubLogin);
 userRouter.get("/github/finish", publicOnlyMiddleware, finishGithubLogin);
 userRouter
