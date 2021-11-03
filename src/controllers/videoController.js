@@ -1,4 +1,5 @@
 import Video from "../models/video";
+import User from "../models/user";
 
 // export const recommended = (req, res) => {
 //   // {} --> find all
@@ -21,13 +22,10 @@ export const getEditVideo = async (req, res) => {
   const { id } = req.params;
   const video = await Video.findById(id);
   if (video) {
-    return res.render("edit", {
-      pageTitle: video.title + " | edit",
-      video,
-    });
-  } else {
-    return res.status(404).render("404", { pageTitle: "video not found" });
-  }
+  return res.render("edit", {
+    pageTitle: video.title + " | edit",
+    video,
+  });
 };
 export const postEditVideo = async (req, res) => {
   const { id } = req.params;
@@ -52,15 +50,20 @@ export const postUploadVideo = async (req, res) => {
   try {
     const {
       body: { title, description, hashtags },
-      file: { path: videoUrl },
+      session: {
+        user: { _id },
+      },
     } = req;
-    const newUser = await Video.create({
+    const newVideo = await Video.create({
       title,
       videoUrl,
       description,
       hashtags,
+      owner: _id,
     });
-    // console.log(newUser);
+    const user = await User.findById(_id);
+    user.videos.push(newVideo._id);
+    user.save();
     return res.redirect("/");
   } catch (error) {
     return res.render("upload", {
@@ -92,7 +95,7 @@ export const searchVideo = async (req, res) => {
 };
 export const seeVideo = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id);
+  const video = await Video.findById(id).populate("owner");
   if (video) {
     res.render("watch", { pageTitle: video.title, video });
   } else {
