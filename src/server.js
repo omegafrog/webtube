@@ -28,7 +28,6 @@ app.use(localsMiddleware);
 app.use("/", globalRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
-app.use("/uploads/Video", express.static("uploads/Video"));
-app.use("/uploads/Avatar", express.static("uploads/Avatar"));
-
+app.use("/uploads/Video", express.static("uploads"));
+app.use("/assets", express.static("assets"));
 export default app;
