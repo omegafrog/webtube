@@ -1,10 +1,7 @@
 header
-    h1 
-        a(href="/") Webtube
-    h2 #{pageTitle}
+    a(href="/").logo
+        img(src="/src/img/logo.png")
     nav 
-        if loggedIn 
-            small hello #{user.username}
         ul 
             if loggedIn
                 li

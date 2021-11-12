@@ -1,0 +1,29 @@
+@import "../config/variable";
+.search {
+  background-color: $uploadBg;
+  width: 80%;
+  margin: 0px auto;
+  .search__sector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+    input[type="text"] {
+      height: 3vw;
+      width: 50vw;
+    }
+    input[type="submit"] {
+      height: 3.4vw;
+      width: auto;
+    }
+  }
+  .result__sector {
+    display: grid;
+    grid-template-columns: repeat(4, 23%);
+    grid-auto-columns: 5vw;
+    grid-gap: 20px;
+    background-color: $videoInfoBg;
+    padding: 1vw;
+  }
+}

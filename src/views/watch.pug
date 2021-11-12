@@ -1,20 +1,29 @@
 extends base.pug
-block content 
-    video(src="/"+video.videoUrl, controls)
-    h2=video.title
-    p=video.description
-    small=video.createdAt
-    br
-    small Created by 
-        a(href=`/users/${video.owner._id}`) #{video.owner.name}
-        #{video.owner.name}
-    hr
-    h3 #{video.meta.views} #{video.meta.views === 1?"view":"views"}
-    ul 
-        each hashtag in video.hashtags
-            li 
-                a(href="") #{hashtag}
-    if String(video.owner._id) === String(user._id)
-        a(href= video.id +"/edit") Edit video &rarr;
-        br
-        a(href= video.id+"/delete") Delete video &rarr;
+include mixins/avatar
+block content
+    div.watch
+        div.video__watch
+            video(src="/"+video.videoUrl, controls)
+        div.video__description
+            div.title
+                ul 
+                    each hashtag in video.hashtags
+                        li 
+                            a(href="/search/?keyword=%23"+hashtag.substr(1)) #{hashtag}
+                span #{video.title}
+            div.info__small
+                small #{video.meta.views} #{video.meta.views === 1?"view":"views"}
+                small #{" "}&#183;#{" "}
+                small #{video.createdAt.getFullYear()+". "+video.createdAt.getMonth()+". "+video.createdAt.getDay()}
+            hr
+            div.creater__info
+                small
+                    +avatar(video.owner)
+                    a(href=`/users/${video.owner._id}`) #{video.owner.name}
+            div.video__etc
+                p=video.description
+                br
+                if String(video.owner._id) === String(user._id)
+                    a(href= video.id +"/edit") Edit video &rarr;
+                    br
+                    a(href= video.id+"/delete") Delete video &rarr;

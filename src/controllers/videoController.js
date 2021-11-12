@@ -12,8 +12,8 @@ import User from "../models/user";
 // pormise
 export const recommended = async (req, res) => {
   try {
-    const videos = await Video.find({});
-    return res.render("home", { pageTitle: "Home", videos });
+    const videos = await Video.find({}).populate("owner");
+    return res.render("home", { pageTitle: "Webtube", videos });
   } catch {
     return res.send("error");
   }
@@ -96,13 +96,22 @@ export const deleteVideo = async (req, res) => {
 
 export const searchVideo = async (req, res) => {
   const { keyword } = req.query;
-  if (keyword) {
+  console.log(keyword);
+  if (!keyword) {
+    return res.render("search", { pageTitle: "Search", videos: [] });
+  }
+  if (keyword.startsWith("#")) {
+    const videos = await Video.find({
+      hashtags: keyword,
+    }).populate("owner");
+    return res.render("search", { pageTitle: "Search", videos });
+  } else if (keyword) {
     const videos = await Video.find({
       title: keyword,
-    });
-    res.render("search", { pageTitle: "Search", videos });
+    }).populate("owner");
+    return res.render("search", { pageTitle: "Search", videos });
   } else {
-    res.render("search", { pageTitle: "Search", videos: [] });
+    return res.render("search", { pageTitle: "Search", videos: [] });
   }
 };
 export const seeVideo = async (req, res) => {
