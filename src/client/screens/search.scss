@@ -20,7 +20,6 @@
   }
   .result__sector {
     display: grid;
-    width: 100%;
     grid-template-columns: repeat(4, 23%);
     grid-auto-columns: 5vw;
     grid-gap: 20px;
