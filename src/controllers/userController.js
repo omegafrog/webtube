@@ -1,4 +1,5 @@
 import User from "../models/user";
+import Video from "../models/video";
 import bcrypt from "bcrypt";
 import fetch from "node-fetch";
 
@@ -159,14 +160,17 @@ export const finishGithubLogin = async (req, res) => {
 
 export const seeUser = async (req, res) => {
   const { id } = req.params;
-  const user = await User.findById(id).populate("videos");
+  const user = await User.findById(id);
+  const videos = await Video.find({ owner: user._id }).populate("owner");
+
+  console.log(videos);
   if (!user) {
     return res.render("404", { pageTitle: "404 page not found." });
   }
-  return res.render("profile", { pageTitle: user.name, user });
+  return res.render("profile", { pageTitle: user.name, user, videos });
 };
 export const getEditUser = (req, res) => {
-  res.render("edit-profile", { pageTitle: "Edit Profile" });
+  return res.render("edit-profile", { pageTitle: "Edit Profile" });
 };
 export const postEditUser = async (req, res) => {
   const {

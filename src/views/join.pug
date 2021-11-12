@@ -2,7 +2,7 @@ extends base
 block content 
     if errorMessage
         span=errorMessage
-    form(method="POST")
+    form(method="POST").join__form
         input(placeholder="name",name="name", type="text",required)
         input(placeholder="email",name="email", type="text", required)
         input(placeholder="username",name="username", type="text", required)

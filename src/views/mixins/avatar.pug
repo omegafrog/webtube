@@ -1,0 +1,7 @@
+mixin avatar(owner)
+    if owner.githubLoginOnly === true
+        a(href="/users/"+String(owner._id))
+            img(src=owner.avatarURL).avatar
+    else
+        a(href="/users/"+String(owner._id))
+            img(src="/uploads/Avatar/"+owner.avatarURL).avatar

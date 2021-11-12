@@ -1,0 +1,38 @@
+.info__videos {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  div {
+    display: flex;
+    flex-direction: row;
+    padding-top: 1.5vw;
+    img {
+      border-radius: 70%;
+      width: 3vw;
+      height: 3vw;
+    }
+    div {
+      display: flex;
+      flex-direction: column;
+      padding-top: 0px;
+      padding-left: 1vw;
+      .video__title {
+        font-size: 1.5rem;
+      }
+      .video__description {
+        font-size: 0.8rem;
+        padding: 0px;
+        opacity: 0.9;
+        small {
+          padding: 0.2vw;
+        }
+      }
+      .info__small {
+        display: flex;
+        flex-direction: row;
+        font-size: 0.8rem;
+        padding-left: 0px;
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+@import "../config/variable";
+ul {
+  list-style: none;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5vw;
+  padding-bottom: 0.5vw;
+  padding-left: 2vw;
+  background-color: $footerBg;
+  .logo {
+    display: flex;
+    img {
+      width: 60%;
+      height: auto;
+    }
+  }
+  ul {
+    display: flex;
+    justify-content: space-between;
+    li {
+      font-size: 15px;
+      font-weight: bold;
+      text-transform: uppercase;
+      padding: 10px 10px;
+    }
+  }
+}

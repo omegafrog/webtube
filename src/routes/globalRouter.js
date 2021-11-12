@@ -18,7 +18,7 @@ globalRouter
   .all(publicOnlyMiddleware)
   .get(getLogin)
   .post(postLogin);
-globalRouter.get("/search", protectorMiddleware, searchVideo);
+globalRouter.get("/search", searchVideo);
 globalRouter.route("/join").get(getJoin).post(postJoin);
 
 export default globalRouter;

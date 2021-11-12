@@ -1,16 +1,20 @@
 extends base.pug
+include mixins/avatar.pug
 block content 
-    if errorMessage
-        span=errorMessage
-    img(src="/"+user.avatarURL, width="100",height="100")
-    form(method="POST", enctype="multipart/form-data")
-        lable(for="avatar") Avatar
-        input(type="file", name="avatar", id="avatar", accept="image/*")
-        input(name="name", placeholder="New name", value=user.name)
-        input(name="location", placeholder="New location", value=user.location)
-        input(name="email", placeholder="New email", value=user.email)
-        input(name="username", placeholder="New username", value = user.username)
-        input(type="submit", value="edit")
-        if user.githubLoginOnly===false
-            hr
-            a(href="changePassword") Change Password &rarr;
+    div.edit__form
+        if errorMessage
+            span=errorMessage
+        form(method="POST", enctype="multipart/form-data")
+            div
+                div.avatar__div
+                    lable(for="avatar") Avatar
+                    +avatar(user)
+                    input(type="file", name="avatar", id="avatar", accept="image/*")
+                input(name="name", placeholder="New name", value=user.name)
+                input(name="location", placeholder="New location", value=user.location)
+                input(name="email", placeholder="New email", value=user.email)
+                input(name="username", placeholder="New username", value = user.username)
+            input(type="submit", value="edit")
+            if user.githubLoginOnly===false
+                hr
+                a(href="changePassword") Change Password &rarr;
