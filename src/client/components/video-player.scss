@@ -1,0 +1,63 @@
+#videoContainer {
+  span:not(span[id="currenTime"], span[id="totalTime"]) {
+    cursor: pointer;
+  }
+  button {
+    cursor: pointer;
+  }
+  width: 90%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  video {
+    width: 60vw;
+    height: auto;
+  }
+  .videoPlayer {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    &.showing {
+      opacity: 1;
+    }
+    align-items: center;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 10px;
+    width: 60vw;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 4fr 1.8fr;
+    gap: 10px;
+    justify-content: space-between;
+    background-color: #0f1117;
+    padding: 15px;
+    left: 0;
+    box-sizing: border-box;
+    .videoPlayer__play {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      .videoPlayer__playBtn {
+        margin: 0px 15px;
+      }
+      .videoPlayer__time {
+        font-size: 12px;
+      }
+      .videoPlayer__timeline {
+      }
+    }
+    .videoPlayer__volume {
+      display: flex;
+      align-items: center;
+      span {
+        margin-left: 10px;
+        i {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}
