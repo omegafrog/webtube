@@ -1,7 +1,20 @@
 extends base
 include mixins/info.pug
-block content 
-    h1 #{user.name}
-    each video in user.videos 
-        +info(video)
-    
+include mixins/avatar.pug
+block content
+    div.user__profile
+        div.user__info
+            if user.githubLoginOnly === true 
+                a(href="/users/"+String(user._id))
+                    img(src=user.avatarURL).avatar
+            else
+                a(href="/users/"+String(user._id))
+                    img(src="/uploads/Avatar/"+user.avatarURL).avatar
+            h1 #{user.name}
+        div.uploaded__sector 
+            div
+                span Uploaded Videos
+            div.profile__videos
+                each video in videos
+                    +info(video)
+            

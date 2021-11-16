@@ -1,7 +1,16 @@
+include avatar.pug
 mixin info(video)
-    div
-        h4
-            a(href="/videos/"+ video.id)=video.title
-        p=video.description
-        hr
-        small=video.createdAt 
+    div.info__videos
+        a(href="/videos/"+ video.id)
+            video(src="/"+video.videoUrl)
+        div
+            +avatar(video.owner)
+            div
+                a(href="/videos/"+ video.id).video__title #{video.title}
+                div.video__description
+                    br
+                    small #{video.owner.name}
+                div.info__small
+                    small #{video.meta.views} #{video.meta.views === 1?"view":"views"}
+                    small #{" "}&#183;#{" "}
+                    small #{video.createdAt.getFullYear()+". "+video.createdAt.getMonth()+". "+video.createdAt.getDay()}

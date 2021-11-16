@@ -1,0 +1,50 @@
+@import "../config/variable";
+.edit__form {
+  background-color: $uploadBg;
+  width: 80%;
+  margin: 0px auto;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    & > div:first-child {
+      display: grid;
+      grid-template:
+        "avatar avatar name name name"
+        "avatar avatar username username username"
+        "avatar avatar location location location"
+        "avatar avatar email email email";
+      .avatar__div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        lable {
+          padding: 10px;
+        }
+        .avatar {
+          width: 5vw;
+          height: 5vw;
+        }
+        grid-area: avatar;
+      }
+
+      input[name="name"] {
+        height: 3vw;
+        grid-area: name;
+      }
+      input[name="location"] {
+        grid-area: location;
+      }
+      input[name="email"] {
+        grid-area: email;
+      }
+      input[name="username"] {
+        height: 3vw;
+        grid-area: username;
+      }
+    }
+  }
+}

@@ -1,1 +1,1 @@
-import "../scss/style.scss";
+import "./screens/style.scss";

@@ -1,0 +1,16 @@
+@import "../components/info.scss";
+
+video {
+  width: 100%;
+}
+.home__videos {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(4, 23%);
+  grid-auto-columns: 5vw;
+  grid-gap: 20px;
+  background-color: $videoInfoBg;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  padding-bottom: 2vw;
+}
