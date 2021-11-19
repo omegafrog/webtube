@@ -170,12 +170,20 @@ const handleKeydown = (e) => {
     }
   }
 };
+
+const handleEnded = () => {
+  console.log("video finished!");
+  const { videoid } = videoContainer.dataset;
+  console.log(videoid);
+  fetch(`/api/videos/${videoid}/view`, {
+    method: "POST",
+  });
+};
 play.addEventListener("click", handlePlayEvent);
 mute.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolume);
 timeline.addEventListener("input", handleVideo);
 window.addEventListener("load", function () {
-  console.log("loaded");
   video.addEventListener("loadedmetadata", handleMetadata);
   video.addEventListener("timeupdate", handleTimeUpdate);
 });
@@ -183,3 +191,4 @@ fullscreenBtn.addEventListener("click", handleFullscreen);
 video.addEventListener("mousemove", handleMouseMove);
 video.addEventListener("mouseleave", handleMouseLeave);
 document.addEventListener("keydown", handleKeydown);
+video.addEventListener("ended", handleEnded);
