@@ -2,7 +2,7 @@ extends base.pug
 include mixins/avatar
 block content
     div.watch
-        div.video__watch#videoContainer
+        div.video__watch#videoContainer(data-videoId=video.id)
             video(src="/"+video.videoUrl)
             div.videoPlayer
                 div.videoPlayer__play

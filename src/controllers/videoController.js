@@ -123,3 +123,15 @@ export const seeVideo = async (req, res) => {
     res.render("404", { pageTitle: "video not found" });
   }
 };
+
+export const addView = async (req, res) => {
+  const { id } = req.params;
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.sendStatus(404);
+  }
+  console.log(video);
+  video.meta.views = video.meta.views + 1;
+  await video.save();
+  return res.sendStatus(200);
+};
