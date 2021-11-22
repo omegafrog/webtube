@@ -6,6 +6,8 @@ block content
     div.upload__video
         h1 Upload Video
         hr
+        button#record start record
+        video#preview
         form(method="POST", enctype="multipart/form-data")
             div.input__video
                 textarea(name="title", required,type="text",placeholder="title(required)", maxlength=80)
@@ -14,4 +16,7 @@ block content
                 div.submit__video
                     label(for="video") Video
                     input(name="video", type="file", required, id="video")
+                    
                 input(type="submit", value="Upload")
+block script 
+    script(src="/assets/js/recorder.js")
