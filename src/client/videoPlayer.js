@@ -56,12 +56,13 @@ const handleVolume = (e) => {
   }
 };
 const handleMetadata = () => {
-  const time = new Date(video.duration * 1000);
+  const time = new Date(video.duration);
   totalTime.innerText = time.toISOString().substr(14, 5);
   timeline.max = Math.floor(video.duration);
 };
 const handleTimeUpdate = () => {
   const time = new Date(video.currentTime * 1000);
+
   currenTime.innerText = time.toISOString().substr(14, 5);
   timeline.value = Math.floor(video.currentTime);
 };
@@ -183,9 +184,15 @@ play.addEventListener("click", handlePlayEvent);
 mute.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolume);
 timeline.addEventListener("input", handleVideo);
-window.addEventListener("load", function () {
-  video.addEventListener("loadedmetadata", handleMetadata);
-  video.addEventListener("timeupdate", handleTimeUpdate);
+video.addEventListener("loadedmetadata", function () {
+  if (video.readyState == 4) {
+    handleMetadata();
+  }
+});
+video.addEventListener("timeupdate", function () {
+  if (video.readyState == 4) {
+    handleTimeUpdate();
+  }
 });
 fullscreenBtn.addEventListener("click", handleFullscreen);
 video.addEventListener("mousemove", handleMouseMove);
