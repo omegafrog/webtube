@@ -10,19 +10,13 @@ export const postLogin = async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username, socialOnly: false });
   if (!user) {
-    return res.render("login", {
-      pageTitle: "login",
-
-      errorMessage: "An account with this username does not exist",
-    });
+    req.flash("error", "An account with this username does not exist.");
+    return res.redirect("/login");
   }
   const match = await bcrypt.compare(password, user.password);
   if (!match) {
-    return res.render("login", {
-      pageTitle: "login",
-
-      errorMessage: "Wrong password",
-    });
+    req.flash("error", "password wrong.");
+    return res.redirect("/login");
   }
   // request에 sid가 있고, 그 sid를 가진 세션을 선택해라
   // 그래서 req.session인것같다. res.session도아니고
@@ -47,22 +41,16 @@ export const postJoin = async (req, res) => {
   const emailExist = await User.exists({ email });
   const passwordmatched = password !== password2;
   if (usernameExist) {
-    return res.status(400).render("join", {
-      pageTitle: "Join",
-      errorMessage: "This username is already taken",
-    });
+    req.flash("error", "This username is already taken.");
+    return res.redirect("/join");
   }
   if (emailExist) {
-    return res.status(400).render("join", {
-      pageTitle: "Join",
-      errorMessage: "This email is already taken",
-    });
+    req.flash("error", "This email is already taken.");
+    return res.redirect("/join");
   }
   if (passwordmatched) {
-    return res.status(400).render("join", {
-      pageTitle: "Join",
-      errorMessage: "Password confirmation is not match",
-    });
+    req.flash("error", "Password confirmation is not match.");
+    return res.redirect("/join");
   }
   try {
     const newUser = await User.create({
@@ -185,16 +173,12 @@ export const postEditUser = async (req, res) => {
     const emailOverlapped = await User.exists({ email });
 
     if (usernameOverlapped && req.session.user.username !== username) {
-      return res.render("edit-profile", {
-        pageTitle: "Edit Users",
-        errorMessage: "Same username exists.",
-      });
+      req.flash("error", "Same username exists.");
+      return res.redirect("/users/edit");
     }
     if (emailOverlapped && req.session.user.email !== email) {
-      return res.render("edit-profile", {
-        pageTitle: "Edit Users",
-        errorMessage: "Same email exists.",
-      });
+      req.flash("error", "Same email exists.");
+      return res.redirect("/users/edit");
     }
     const updatedUser = await User.findByIdAndUpdate(
       _id,
@@ -234,15 +218,11 @@ export const postChangePassword = async (req, res) => {
   const isOldPasswordCorrect = await bcrypt.compare(old_password, password);
   console.log(isOldPasswordCorrect);
   if (!isOldPasswordCorrect) {
-    return res.render("changePassword", {
-      pageTitle: "Change Password",
-      errorMessage: "Current password is not correct.",
-    });
+    req.flash("error", "Current password is not correct.");
+    return res.redirect("/users/changePassword");
   } else if (new_password !== new_password_confirmation) {
-    return res.render("changePassword", {
-      pageTitle: "Change Password",
-      errorMessage: "Password confirmation is not correct.",
-    });
+    req.flash("error", "Password confirmation is not correct.");
+    return res.redirect("/users/changePassword");
   }
   const changedUser = await User.findByIdAndUpdate(
     _id,
@@ -253,4 +233,3 @@ export const postChangePassword = async (req, res) => {
   );
   return res.redirect("/users/logout");
 };
-export const deleteUser = (req, res) => res.send("deleteUser");

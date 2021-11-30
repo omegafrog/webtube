@@ -1,27 +1,40 @@
 @import "../config/variable";
 .login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin: 0 auto;
+  border: $inputColor 2px solid;
+  border-radius: 20px;
   form {
-    margin: 0px auto;
+    margin: 2vw 0px 2vw 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 60%;
+    width: 100%;
     input {
-      width: 70%;
-      height: 6vw;
-      margin-top: 1vw;
-      margin-bottom: 1vw;
+      width: 80%;
+      height: 5vw;
       font-size: 25px;
       font-weight: bold;
+    }
+    input[value="login"] {
+      background-color: white;
+      color: tomato;
+      border-radius: 5px;
+      padding: 0px;
+      border: 1px solid white;
     }
     .submit__btn {
       border-radius: 15px;
     }
     div {
-      width: 70%;
+      width: 80%;
       span a {
         padding-top: 10vw;
         padding-bottom: 10vw;

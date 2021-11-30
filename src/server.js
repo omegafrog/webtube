@@ -7,6 +7,7 @@ import videoRouter from "./routes/videoRouter";
 import apiRouter from "./routes/apiRouter";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import flash from "express-flash";
 import { localsMiddleware } from "./middlewares";
 
 const app = express();
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
   res.header("Cross-Origin-Opener-Policy", "same-origin");
   next();
 });
+app.use(flash());
 app.use(localsMiddleware);
 app.use("/", globalRouter);
 app.use("/users", userRouter);
