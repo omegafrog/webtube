@@ -1,4 +1,3 @@
-import "./db";
 import express from "express";
 import logger from "morgan";
 import globalRouter from "./routes/globalRouter";
@@ -16,6 +15,7 @@ app.set("view engine", "pug");
 
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(
   session({
     secret: process.env.COOKIE_SECRET,

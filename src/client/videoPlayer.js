@@ -35,7 +35,6 @@ const handleMute = (e) => {
     video.volume = volume;
     video.muted = false;
   }
-  console.log(video.muted);
   mute.innerText = video.muted ? "Unmutted" : "Mute";
   volumeRange.value = video.muted ? 0 : volume;
 };
@@ -48,7 +47,6 @@ const handleVolume = (e) => {
   if (video.volume === 0) {
     video.muted = true;
   }
-  console.log(video.muted);
   if (video.muted === false) {
     mute.innerText = "Mute";
   } else {
@@ -137,8 +135,6 @@ const handleKeydown = (e) => {
     videoPlayer.classList.remove("showing");
   }, 3000);
 
-  console.log(keyCode, timeline.value, video.currentTime);
-  console.log(keyCode, volumeRange.value, video.volume);
   if (keyCode === "ArrowLeft") {
     if (timeline.value > 0) {
       timeline.value = timeline.value - 1;
@@ -173,9 +169,7 @@ const handleKeydown = (e) => {
 };
 
 const handleEnded = () => {
-  console.log("video finished!");
   const { videoid } = videoContainer.dataset;
-  console.log(videoid);
   fetch(`/api/videos/${videoid}/view`, {
     method: "POST",
   });

@@ -21,8 +21,9 @@ const handleDownload = async () => {
   let mp4URL = null;
   let thumbnail = null;
   let thumbnailURL = null;
+  let ffmepg = null;
   if (mp4File === null) {
-    const ffmepg = createFFmpeg({
+    ffmepg = createFFmpeg({
       corePath: "https://unpkg.com/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js",
       log: true,
     });
