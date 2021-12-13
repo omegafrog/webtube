@@ -8,7 +8,7 @@ let videoFile = null;
 let mp4File = null;
 
 console.log(recordBtn, preview);
-const init = async (e) => {
+const init = async () => {
   stream = await navigator.mediaDevices.getUserMedia({
     audio: true,
     video: { width: 200, height: 100 },

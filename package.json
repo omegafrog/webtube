@@ -5,6 +5,7 @@
   "dependencies": {
     "@ffmpeg/core": "^0.10.0",
     "@ffmpeg/ffmpeg": "^0.10.1",
+    "acorn": "^8.6.0",
     "bcrypt": "^5.0.1",
     "connect-mongo": "^4.6.0",
     "dotenv": "^10.0.0",
@@ -18,6 +19,7 @@
     "regenerator-runtime": "^0.13.9"
   },
   "devDependencies": {
+    "@babel/cli": "^7.16.0",
     "@babel/core": "^7.15.8",
     "@babel/node": "^7.15.8",
     "@babel/preset-env": "^7.15.8",
@@ -33,7 +35,11 @@
   },
   "scripts": {
     "test": "nodemon",
-    "assets": "webpack"
+    "assets": "webpack --mode=development -w",
+    "build": "npm run build:assets && npm run build:server",
+    "start": "node build/init.js",
+    "build:assets": "webpack --mode=production",
+    "build:server": "babel src -d build"
   },
   "repository": {
     "type": "git",
