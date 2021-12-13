@@ -1,8 +1,13 @@
+// todo : start recode button css
+// set video, thumbnail, upload div to be full
+
 @import "../config/variable";
 .upload__video {
   background-color: $uploadBg;
   width: 80%;
+  height: 100%;
   margin: 0px auto;
+
   h1 {
     padding: 2vw;
     font-size: 2rem;
@@ -10,6 +15,27 @@
   hr {
     opacity: 0.5;
     width: 93%;
+  }
+  #videoRecorder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    video {
+      height: auto;
+      width: 50vh;
+      margin: 0px auto;
+    }
+    #record {
+      width: 10vw;
+      margin: 0px auto;
+      color: tomato;
+      background-color: white;
+      font-weight: bold;
+      font-size: 1.4rem;
+      border: none;
+      border-radius: 30px;
+    }
   }
   form {
     display: flex;
@@ -66,6 +92,8 @@
       }
       input[type="submit"] {
         grid-area: submit;
+        height: 13vh;
+        margin: 1vw;
       }
     }
   }

@@ -1,14 +1,22 @@
+// TODO : inner contet box set center
+// edit file lable size
+
 @import "../config/variable";
 .edit__form {
-  background-color: $uploadBg;
-  width: 80%;
   margin: 0px auto;
-  padding: 10px;
+  margin-top: 10vh;
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
 
   form {
+    padding: 2vw;
+    background-color: $uploadBg;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 85%;
     & > div:first-child {
       display: grid;
       grid-template:
@@ -21,19 +29,17 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: auto;
-        lable {
-          padding: 10px;
-        }
         .avatar {
           width: 5vw;
           height: 5vw;
         }
         grid-area: avatar;
+        input {
+          height: 15vh;
+        }
       }
 
       input[name="name"] {
-        height: 3vw;
         grid-area: name;
       }
       input[name="location"] {
@@ -43,9 +49,15 @@
         grid-area: email;
       }
       input[name="username"] {
-        height: 3vw;
         grid-area: username;
       }
     }
+  }
+  input[value="edit"] {
+    color: tomato;
+    background-color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   }
 }

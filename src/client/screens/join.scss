@@ -1,25 +1,37 @@
+// todo : login anchor indent
 @import "../config/variable";
+
 .join__div {
+  margin-top: 6vh;
+  width: 100%;
   .join__form {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     background-color: $uploadBg;
-    width: 80%;
+    width: 60%;
     margin: 0px auto;
+    padding-top: 30px;
+    padding-bottom: 30px;
     input {
       width: 70%;
       height: 4vw;
-      margin: 0.5vw;
+      margin: 0.7vw;
+    }
+    input[value="join"] {
+      background-color: white;
+      color: tomato;
+      font-weight: bold;
+      font-size: 1.5rem;
+      font-family: "Segoe UI";
     }
   }
-
   hr {
-    width: 80%;
+    width: 70%;
     opacity: 0.3;
   }
   div {
-    margin: 0px auto;
     a {
       color: $anchorColor;
     }
