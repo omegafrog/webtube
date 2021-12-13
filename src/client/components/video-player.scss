@@ -21,15 +21,15 @@
       opacity: 1;
     }
     align-items: center;
-    border-radius: 10px;
+    border-radius: 40px;
     position: absolute;
     bottom: 10px;
-    width: 60vw;
+    width: 55vw;
     left: 0;
     right: 0;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 1fr 4fr 1.8fr;
+    grid-template-columns: 1fr 1fr 4fr 1.8fr 0.3fr;
     gap: 10px;
     justify-content: space-between;
     background-color: #0f1117;
@@ -52,12 +52,15 @@
     .videoPlayer__volume {
       display: flex;
       align-items: center;
+      justify-content: space-around;
       span {
         margin-left: 10px;
         i {
           font-size: 20px;
         }
       }
+    }
+    .videoPlayer__fullscreen {
     }
   }
 }

@@ -16,7 +16,8 @@ block content
                 div.videoPlayer__volume
                     input(type="range", min="0", max="1",value=0.5, step="0.1")#volume
                     span#mute Mute
-                button#fullscreen full
+                div.videoPlayer__fullscreen
+                    i.fas.fa-expand#fullscreen
         div.video__description
             div.title
                 ul 
@@ -43,6 +44,7 @@ block content
         if loggedIn
             div.video__add-comments
                 form#commentForm
+                    +avatar(video.owner)
                     textarea(cols="30", rows="10", placeholder = "comment")
                     button Add comment
         div.video__comments
@@ -50,7 +52,7 @@ block content
                 each comment in video.comments.reverse()
                     li.video__comment(data-commentid=comment.id)
                         i.fas.fa-comment
-                        |  #{comment.text} 
+                        |          #{comment.text} 
                         if String(comment.owner) === String(user._id)
                             button.delete__button ❌
 block script
