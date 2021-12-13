@@ -5,9 +5,11 @@ block content
         form(method="GET")
             div.search__sector
                 input(type="text",placeholder="Search by title" name="keyword")
-                input(type="submit")
+                input(type="submit", value="search")
         div.result__sector
-            each video in videos 
-                +info(video)
-    
+            if video
+                each video in videos 
+                    +info(video)
+            else
+                div No video Found
     

@@ -17,27 +17,24 @@ let controlsMovingTimeout = null;
 let controlsKeydownTimeout = null;
 
 const handlePlayEvent = (e) => {
-  if (video.paused) {
-    video.play();
-  } else {
-    video.pause();
-  }
   const curIcon = play.querySelector("i");
   const playIcon = document.createElement("i");
-  playIcon.classList.add("fas", "fa-play");
   const pauseIcon = document.createElement("i");
+  playIcon.classList.add("fas", "fa-play");
   pauseIcon.classList.add("fas", "fa-pause");
 
   if (video.paused) {
-    play.removeChild(curIcon);
-    play.appendChild(playIcon);
+    console.log("paused");
+    curIcon.classList.remove("fa-play");
+    curIcon.classList.add("fa-pause");
+    video.play();
   } else {
-    play.removeChild(curIcon);
-    play.appendChild(pauseIcon);
+    console.log("played");
+    playIcon.classList.remove("fa-pause");
+    curIcon.classList.add("fa-play");
+    video.pause();
   }
 };
-const handlePlay = (e) => (play.innerText = "Pause");
-const handlePause = (e) => (play.innerText = "Play");
 
 const handleMute = (e) => {
   if (video.volume > 0) {
@@ -86,10 +83,12 @@ const handleVideo = (e) => {
 const handleFullscreen = () => {
   if (document.fullscreenElement) {
     document.exitFullscreen();
-    fullscreenBtn.innerText = "full";
+    fullscreenBtn.classList.remove("fa-compress");
+    fullscreenBtn.classList.add("fa-expand");
   } else {
     videoContainer.requestFullscreen();
-    fullscreenBtn.innerText = "exit";
+    fullscreenBtn.classList.remove("fa-expand");
+    fullscreenBtn.classList.add("fa-compress");
   }
 };
 const handleMouseMove = () => {
@@ -186,6 +185,10 @@ const handleKeydown = (e) => {
 };
 
 const handleEnded = () => {
+  const curIcon = play.querySelector("i");
+  const playIcon = document.createElement("i");
+  playIcon.classList.remove("fa-pause");
+  curIcon.classList.add("fa-play");
   const { videoid } = videoContainer.dataset;
   fetch(`/api/videos/${videoid}/view`, {
     method: "POST",
