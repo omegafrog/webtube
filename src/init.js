@@ -7,7 +7,7 @@ import "./models/video";
 
 import app from "./server";
 
-const port = 4000;
+const port = process.env.PORT;
 
 const handleListener = () => console.log("success");
 
