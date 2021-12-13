@@ -3,24 +3,44 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
+    "@ffmpeg/core": "^0.10.0",
+    "@ffmpeg/ffmpeg": "^0.10.1",
+    "acorn": "^8.6.0",
     "bcrypt": "^5.0.1",
     "connect-mongo": "^4.6.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-flash": "0.0.2",
     "express-session": "^1.17.2",
     "mongoose": "^6.0.12",
     "morgan": "^1.10.0",
+    "multer": "^1.4.3",
     "node-fetch": "^2.6.1",
-    "pug": "^3.0.2"
+    "pug": "^3.0.2",
+    "regenerator-runtime": "^0.13.9"
   },
   "devDependencies": {
+    "@babel/cli": "^7.16.0",
     "@babel/core": "^7.15.8",
     "@babel/node": "^7.15.8",
     "@babel/preset-env": "^7.15.8",
-    "nodemon": "^2.0.14"
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.5.1",
+    "mini-css-extract-plugin": "^2.4.4",
+    "nodemon": "^2.0.14",
+    "sass": "^1.43.4",
+    "sass-loader": "^12.3.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.61.0",
+    "webpack-cli": "^4.9.1"
   },
   "scripts": {
-    "test": "nodemon --delay 500ms --exec babel-node src/init.js"
+    "test": "nodemon",
+    "assets": "webpack --mode=development -w",
+    "build": "npm run build:assets && npm run build:server",
+    "start": "node build/init.js",
+    "build:assets": "webpack --mode=production",
+    "build:server": "babel src -d build"
   },
   "repository": {
     "type": "git",

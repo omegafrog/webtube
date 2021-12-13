@@ -1,14 +1,59 @@
 extends base.pug
-block content 
-    p=video.description
-    small=video.createdAt
-    hr
-    h3 #{video.meta.views} #{video.meta.views === 1?"view":"views"}
-    ul 
-        each hashtag in video.hashtags
-            li 
-                a(href="") #{hashtag}
-
-    a(href= video.id +"/edit") Edit video &rarr;
-    br
-    a(href= video.id+"/delete") Delete video &rarr;
+include mixins/avatar
+block content
+    div.watch
+        div.video__watch#videoContainer(data-videoid=video.id)
+            video(src="/"+video.videoUrl)
+            div.videoPlayer
+                div.videoPlayer__play
+                    span#play.videoPlayer__playBtn 
+                        i.fas.fa-play
+                div.videoPlayer__time
+                    span#currenTime 0:00
+                    span  / 
+                    span#totalTime 00:00
+                input(type="range", min="0",value=0, step="1")#timeline
+                div.videoPlayer__volume
+                    input(type="range", min="0", max="1",value=0.5, step="0.1")#volume
+                    span#mute Mute
+                button#fullscreen full
+        div.video__description
+            div.title
+                ul 
+                    each hashtag in video.hashtags
+                        li 
+                            a(href="/search/?keyword=%23"+hashtag.substr(1)) #{hashtag}
+                span #{video.title}
+            div.info__small
+                small #{video.meta.views} #{video.meta.views === 1?"view":"views"}
+                small #{" "}&#183;#{" "}
+                small #{video.createdAt.getFullYear()+". "+video.createdAt.getMonth()+". "+video.createdAt.getDay()}
+            hr
+            div.creater__info
+                small
+                    +avatar(video.owner)
+                    a(href=`/users/${video.owner._id}`) #{video.owner.name}
+            div.video__etc
+                p=video.description
+                br
+                if String(video.owner._id) === String(user._id)
+                    a(href= video.id +"/edit") Edit video &rarr;
+                    br
+                    a(href= video.id+"/delete") Delete video &rarr;
+        if loggedIn
+            div.video__add-comments
+                form#commentForm
+                    textarea(cols="30", rows="10", placeholder = "comment")
+                    button Add comment
+        div.video__comments
+            ul 
+                each comment in video.comments.reverse()
+                    li.video__comment(data-commentid=comment.id)
+                        i.fas.fa-comment
+                        |  #{comment.text} 
+                        if String(comment.owner) === String(user._id)
+                            button.delete__button ❌
+block script
+    script(src="/assets/js/videoPlayer.js")
+    if loggedIn
+        script(src="/assets/js/comment.js")

@@ -1,0 +1,38 @@
+@import "../components/info.scss";
+@import "../config/variable";
+.user__profile {
+  background-color: $videoInfoBg;
+  .user__info {
+    display: flex;
+    align-items: center;
+    background-color: $bg;
+    a {
+      padding: 2vw;
+      img {
+        width: 5vw;
+        height: 5vw;
+        overflow: hidden;
+      }
+    }
+    h1 {
+      font-size: 2rem;
+    }
+  }
+  .uploaded__sector {
+    & > div:first-child {
+      margin-top: 1vw;
+      margin-bottom: 1vw;
+      margin-left: 2vw;
+      font-size: 2rem;
+    }
+    .profile__videos {
+      display: grid;
+      grid-template-columns: repeat(4, 23%);
+      grid-auto-columns: 20vw;
+      gap: 1.3vw;
+      padding-left: 1vw;
+      padding-right: 1vw;
+      padding-bottom: 1vw;
+    }
+  }
+}

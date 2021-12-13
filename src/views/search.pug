@@ -1,10 +1,13 @@
 extends base
 include mixins/info
-block content 
-    div 
+block content
+    div.search
         form(method="GET")
-            input(type="text",placeholder="Search by title" name="keyword")
-            input(type="submit")
-    div 
-        each video in videos 
-            +info(video)
+            div.search__sector
+                input(type="text",placeholder="Search by title" name="keyword")
+                input(type="submit")
+        div.result__sector
+            each video in videos 
+                +info(video)
+    
+    

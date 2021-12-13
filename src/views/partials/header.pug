@@ -1,0 +1,21 @@
+header
+    a(href="/").logo
+        img(src="/src/img/logo.png")
+    nav 
+        ul 
+            if loggedIn
+                li
+                    a(href="/users/logout") Logout
+                li
+                    a(href=`/users/${user._id}`) My profile
+                li
+                    a(href="/users/edit") Edit #{user.username}'s profile
+                li
+                    a(href="/videos/upload") Upload Video
+            else
+                li 
+                    a(href="/login") Login
+                li 
+                    a(href="/join") Create User
+            li
+                a(href="/search") Search Video

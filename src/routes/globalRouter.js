@@ -9,10 +9,15 @@ import {
   logout,
 } from "../controllers/userController";
 import { recommended, searchVideo } from "../controllers/videoController";
+import { protectorMiddleware, publicOnlyMiddleware } from "../middlewares";
 const globalRouter = express.Router();
 
 globalRouter.get("/", recommended);
-globalRouter.route("/login").get(getLogin).post(postLogin);
+globalRouter
+  .route("/login")
+  .all(publicOnlyMiddleware)
+  .get(getLogin)
+  .post(postLogin);
 globalRouter.get("/search", searchVideo);
 globalRouter.route("/join").get(getJoin).post(postJoin);
 

@@ -1,0 +1,13 @@
+input:not(input[type="range"]) {
+  color: white;
+  background-color: transparent;
+  border: $inputColor 2px solid;
+  border-radius: 5px;
+  margin: 0.5vw;
+  height: 3vw;
+  font-size: 18px;
+}
+input:focus {
+  outline: #3ea5fe 2px solid;
+  background-color: transparent;
+}
