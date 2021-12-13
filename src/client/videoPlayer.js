@@ -22,7 +22,19 @@ const handlePlayEvent = (e) => {
   } else {
     video.pause();
   }
-  video.paused ? (play.innerText = "Play") : (play.innerText = "Pause");
+  const curIcon = play.querySelector("i");
+  const playIcon = document.createElement("i");
+  playIcon.classList.add("fas", "fa-play");
+  const pauseIcon = document.createElement("i");
+  pauseIcon.classList.add("fas", "fa-pause");
+
+  if (video.paused) {
+    play.removeChild(curIcon);
+    play.appendChild(playIcon);
+  } else {
+    play.removeChild(curIcon);
+    play.appendChild(pauseIcon);
+  }
 };
 const handlePlay = (e) => (play.innerText = "Pause");
 const handlePause = (e) => (play.innerText = "Play");
@@ -158,12 +170,17 @@ const handleKeydown = (e) => {
       toggleVolumeMuted();
     }
   } else if (keyCode === "Space") {
+    const curIcon = play.querySelector("i");
+    const playIcon = document.createElement("i");
+    playIcon.classList.add("fas", "fa-play");
+    const pauseIcon = document.createElement("i");
+    pauseIcon.classList.add("fas", "fa-pause");
     if (video.paused) {
-      video.play();
-      play.innerText = "Pause";
+      play.removeChild(curIcon);
+      play.appendChild(playIcon);
     } else {
-      video.pause();
-      play.innerText = "Play";
+      play.removeChild(curIcon);
+      play.appendChild(pauseIcon);
     }
   }
 };
@@ -180,7 +197,10 @@ volumeRange.addEventListener("input", handleVolume);
 timeline.addEventListener("input", handleVideo);
 video.addEventListener("loadedmetadata", function () {
   if (video.readyState == 4) {
+    console.log("success");
     handleMetadata();
+  } else {
+    console.log("fail");
   }
 });
 video.addEventListener("timeupdate", function () {
@@ -193,3 +213,4 @@ video.addEventListener("mousemove", handleMouseMove);
 video.addEventListener("mouseleave", handleMouseLeave);
 document.addEventListener("keydown", handleKeydown);
 video.addEventListener("ended", handleEnded);
+/// 비디오가끝나면 puase play로 바꾸기

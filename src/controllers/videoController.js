@@ -15,7 +15,7 @@ export const recommended = async (req, res) => {
   try {
     const videos = await Video.find({}).populate("owner");
     return res.render("home", { pageTitle: "Webtube", videos });
-  } catch {
+  } catch (e) {
     return res.send("error");
   }
 };
