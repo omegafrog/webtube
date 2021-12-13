@@ -6,7 +6,8 @@ mixin info(video)
         div
             +avatar(video.owner)
             div
-                a(href="/videos/"+ video.id).video__title #{video.title}
+                a(href="/videos/"+ video.id).video__title
+                    div #{video.title}
                 div.video__description
                     br
                     small #{video.owner.name}
