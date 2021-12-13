@@ -1,8 +1,6 @@
 extends base
 block content
     div.login
-        if errorMessage
-            span.errormsg #{errorMessage}
         form(method="POST")
             input(placeholder="username",name="username", type="text", required)
             input(placeholder="password",name="password", type="password",required)
@@ -12,5 +10,5 @@ block content
                 a(href="/join") Create now&rarr;
                 br
                 br
-                a(href="/users/github/start") Continue with Github▶
+                a(href="/users/github/start") Continue with Github
         
