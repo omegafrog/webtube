@@ -3,7 +3,6 @@ import {
   seeUser,
   getEditUser,
   postEditUser,
-  deleteUser,
   logoutUser,
   getChangePassword,
   postChangePassword,
@@ -31,6 +30,5 @@ userRouter
   .all(protectorMiddleware)
   .get(getChangePassword)
   .post(postChangePassword);
-userRouter.get("/:id(\\d+)/delete", deleteUser);
 
 export default userRouter;

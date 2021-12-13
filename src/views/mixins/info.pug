@@ -2,7 +2,7 @@ include avatar.pug
 mixin info(video)
     div.info__videos
         a(href="/videos/"+ video.id)
-            video(src="/"+video.videoUrl)
+            img(src=`/${video.thumbnailUrl}`)
         div
             +avatar(video.owner)
             div
