@@ -66,14 +66,14 @@ const handleVolume = (e) => {
   }
 };
 const handleMetadata = () => {
-  const time = new Date(video.duration);
-  totalTime.innerText = time.toISOString().substr(14, 5);
+  const time = new Date(video.duration * 1000);
+  totalTime.innerText = time.toISOString().substring(14, 19);
   timeline.max = Math.floor(video.duration);
 };
 const handleTimeUpdate = () => {
   const time = new Date(video.currentTime * 1000);
 
-  currenTime.innerText = time.toISOString().substr(14, 5);
+  currenTime.innerText = time.toISOString().substring(14, 19);
   timeline.value = Math.floor(video.currentTime);
 };
 const handleVideo = (e) => {
@@ -198,6 +198,7 @@ timeline.addEventListener("input", handleVideo);
 video.addEventListener("loadedmetadata", function () {
   if (video.readyState == 4) {
     console.log("success");
+    console.log(video);
     handleMetadata();
   } else {
     console.log("fail");
