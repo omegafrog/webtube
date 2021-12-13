@@ -151,13 +151,13 @@ export const addComment = async (req, res) => {
     owner: req.session.user._id,
     video: id,
   });
-  const dbVideo = await Video.findById(id).populate("owner");
+  const dbVideo = await Video.findById(id);
   dbVideo.comments.push(newComment._id);
   dbVideo.save();
-  const dbUser = dbVideo.owner;
-  dbUser.comments.push(newComment._id);
-  dbUser.save();
-  req.session.user = dbUser;
+  const user = await User.findById(req.session.user._id);
+  user.comments.push(newComment._id);
+  user.save();
+  req.session.user = user;
   return res.status(201).json({ newCommentId: newComment._id });
 };
 
