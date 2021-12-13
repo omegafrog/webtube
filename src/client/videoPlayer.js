@@ -83,10 +83,14 @@ const handleVideo = (e) => {
 const handleFullscreen = () => {
   if (document.fullscreenElement) {
     document.exitFullscreen();
+    video.style.width = "60vw";
+    video.style.height = "auto";
     fullscreenBtn.classList.remove("fa-compress");
     fullscreenBtn.classList.add("fa-expand");
   } else {
     videoContainer.requestFullscreen();
+    video.style.width = "100vw";
+    video.style.height = "100vh";
     fullscreenBtn.classList.remove("fa-expand");
     fullscreenBtn.classList.add("fa-compress");
   }

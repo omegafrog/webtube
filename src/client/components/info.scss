@@ -5,6 +5,8 @@
   a {
     img {
       border-radius: 20px;
+      width: 20vw;
+      height: 23vh;
     }
   }
   div {
@@ -20,23 +22,27 @@
       display: flex;
       flex-direction: column;
       padding-top: 0px;
-      padding-left: 1vw;
+      padding-left: 0.5vw;
       .video__title {
         font-size: 1.5rem;
+        padding-left: 0px;
+        div {
+          display: block;
+          text-overflow: ellipsis;
+          width: 14vw;
+          overflow: hidden;
+        }
       }
       .video__description {
         font-size: 0.8rem;
-        padding: 0px;
         opacity: 0.9;
         small {
-          padding: 0.2vw;
         }
       }
       .info__small {
         display: flex;
         flex-direction: row;
         font-size: 0.8rem;
-        padding-left: 0px;
       }
     }
   }
