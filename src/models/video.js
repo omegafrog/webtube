@@ -16,10 +16,13 @@ const videoSchema = new mongoose.Schema({
     required: true,
     ref: "User",
   },
+  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
 });
 
 videoSchema.pre("save", async function () {
-  this.hashtags = this.hashtags[0].split(",").map((word) => `#${word.trim()}`);
+  this.hashtags = this.hashtags[0]
+    .split(",")
+    .map((word) => (word.startsWith("#") ? word : `#${word.trim()}`));
 });
 // export const formatHashtags = (hashtags) =>
 //   hashtags

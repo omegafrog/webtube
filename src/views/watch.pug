@@ -2,7 +2,7 @@ extends base.pug
 include mixins/avatar
 block content
     div.watch
-        div.video__watch#videoContainer(data-videoId=video.id)
+        div.video__watch#videoContainer(data-videoid=video.id)
             video(src="/"+video.videoUrl)
             div.videoPlayer
                 div.videoPlayer__play
@@ -39,6 +39,20 @@ block content
                     a(href= video.id +"/edit") Edit video &rarr;
                     br
                     a(href= video.id+"/delete") Delete video &rarr;
-
+        if loggedIn
+            div.video__add-comments
+                form#commentForm
+                    textarea(cols="30", rows="10", placeholder = "comment")
+                    button Add comment
+        div.video__comments
+            ul 
+                each comment in video.comments.reverse()
+                    li.video__comment(data-commentid=comment.id)
+                        i.fas.fa-comment
+                        |  #{comment.text} 
+                        if String(comment.owner) === String(user._id)
+                            button.delete__button ❌
 block script
     script(src="/assets/js/videoPlayer.js")
+    if loggedIn
+        script(src="/assets/js/comment.js")

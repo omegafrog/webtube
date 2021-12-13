@@ -1,5 +1,6 @@
 import Video from "../models/video";
 import User from "../models/user";
+import Comment from "../models/comment";
 
 // export const recommended = (req, res) => {
 //   // {} --> find all
@@ -74,6 +75,7 @@ export const postUploadVideo = async (req, res) => {
     const user = await User.findById(_id);
     user.videos.push(newVideo._id);
     user.save();
+    req.session.user = user;
     return res.redirect("/");
   } catch (error) {
     return res.render("upload", {
@@ -117,7 +119,7 @@ export const searchVideo = async (req, res) => {
 };
 export const seeVideo = async (req, res) => {
   const { id } = req.params;
-  const video = await Video.findById(id).populate("owner");
+  const video = await Video.findById(id).populate("owner").populate("comments");
   if (video) {
     res.render("watch", { pageTitle: video.title, video });
   } else {
@@ -134,5 +136,47 @@ export const addView = async (req, res) => {
   console.log(video);
   video.meta.views = video.meta.views + 1;
   await video.save();
+  return res.sendStatus(200);
+};
+
+export const addComment = async (req, res) => {
+  const {
+    params: { id },
+    body: { data },
+  } = req;
+  console.log(req.body);
+  const video = await Video.findById(id);
+  const newComment = await Comment.create({
+    text: data,
+    owner: req.session.user._id,
+    video: id,
+  });
+  const dbVideo = await Video.findById(id).populate("owner");
+  dbVideo.comments.push(newComment._id);
+  dbVideo.save();
+  const dbUser = dbVideo.owner;
+  dbUser.comments.push(newComment._id);
+  dbUser.save();
+  req.session.user = dbUser;
+  return res.status(201).json({ newCommentId: newComment._id });
+};
+
+export const deleteComment = async (req, res) => {
+  const {
+    params: { id },
+  } = req;
+  const comment = await Comment.findById(id)
+    .populate("owner")
+    .populate("video");
+  const video = comment.video;
+  const user = comment.owner;
+  console.log(video, user);
+  await Comment.findByIdAndDelete(id);
+  video.comments = video.comments.filter(
+    (cur) => String(cur.id) !== String(id)
+  );
+  user.comments = user.comments.filter((cur) => String(cur.id) !== String(id));
+  video.save();
+  user.save();
   return res.sendStatus(200);
 };
