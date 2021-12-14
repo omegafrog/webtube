@@ -4,4 +4,4 @@ mixin avatar(owner)
             img(src=owner.avatarURL,crossorigin).avatar
     else
         a(href="/users/"+String(owner._id))
-            img(src="/uploads/Avatar/"+owner.avatarURL).avatar
+            img(src=owner.avatarURL).avatar

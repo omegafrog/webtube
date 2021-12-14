@@ -9,7 +9,7 @@ block content
                     img(src=user.avatarURL,crossorigin).avatar
             else
                 a(href="/users/"+String(user._id))
-                    img(src="/uploads/Avatar/"+user.avatarURL).avatar
+                    img(src=user.avatarURL,crossorigin).avatar
             h1 #{user.name}
         div.uploaded__sector 
             div
