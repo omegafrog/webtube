@@ -202,7 +202,7 @@ play.addEventListener("click", handlePlayEvent);
 mute.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolume);
 timeline.addEventListener("input", handleVideo);
-video.addEventListener("loadedmetadata", function () {
+video.addEventListener("canplay", function () {
   if (video.readyState == 4) {
     console.log("success");
     console.log(video);
