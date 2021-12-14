@@ -103,7 +103,7 @@ export const searchVideo = async (req, res) => {
   if (!keyword) {
     return res.render("search", { pageTitle: "Search", videos: [] });
   }
-  if (keyword.startsWith("%23")) {
+  if (keyword.substring(1, 3) === "%23") {
     const videos = await Video.find({
       hashtags: keyword,
     }).populate("owner");
