@@ -186,7 +186,7 @@ export const postEditUser = async (req, res) => {
         name,
         email,
         username,
-        avatarURL: file ? file.path : avatarURL,
+        avatarURL: file ? file.location : avatarURL,
         location,
       },
       { new: true }
