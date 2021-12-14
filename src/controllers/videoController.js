@@ -36,7 +36,7 @@ export const getEditVideo = async (req, res) => {
 export const postEditVideo = async (req, res) => {
   const { id } = req.params;
   const { title, description, hashtags } = req.body;
-  const video = await Video.exists({ _id: id });
+  const video = await Video.findById(id).populate("owner");
   if (video) {
     if (String(video.owner._id) !== String(req.session.user._id)) {
       return res.status(403).redirect("/");
