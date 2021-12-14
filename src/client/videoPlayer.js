@@ -202,15 +202,7 @@ play.addEventListener("click", handlePlayEvent);
 mute.addEventListener("click", handleMute);
 volumeRange.addEventListener("input", handleVolume);
 timeline.addEventListener("input", handleVideo);
-video.addEventListener("canplay", function () {
-  if (video.readyState == 4) {
-    console.log("success");
-    console.log(video);
-    handleMetadata();
-  } else {
-    console.log("fail");
-  }
-});
+video.addEventListener("loadedmetadata", handleMetadata);
 video.addEventListener("timeupdate", function () {
   if (video.readyState == 4) {
     handleTimeUpdate();
@@ -221,4 +213,8 @@ video.addEventListener("mousemove", handleMouseMove);
 video.addEventListener("mouseleave", handleMouseLeave);
 document.addEventListener("keydown", handleKeydown);
 video.addEventListener("ended", handleEnded);
+
+if (video.readyState == 4) {
+  handleLoadedMetadata();
+}
 /// 비디오가끝나면 puase play로 바꾸기
