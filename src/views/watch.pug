@@ -3,7 +3,7 @@ include mixins/avatar
 block content
     div.watch
         div.video__watch#videoContainer(data-videoid=video.id)
-            video(src="/"+video.videoUrl)
+            video(src=video.videoUrl)
             div.videoPlayer
                 div.videoPlayer__play
                     span#play.videoPlayer__playBtn 
