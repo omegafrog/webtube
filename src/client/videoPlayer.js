@@ -215,6 +215,6 @@ document.addEventListener("keydown", handleKeydown);
 video.addEventListener("ended", handleEnded);
 
 if (video.readyState == 4) {
-  handleLoadedMetadata();
+  handleMetadata();
 }
 /// 비디오가끝나면 puase play로 바꾸기
